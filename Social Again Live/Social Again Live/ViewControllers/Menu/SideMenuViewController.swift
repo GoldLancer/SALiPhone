@@ -13,12 +13,24 @@ protocol SideMenuViewControllerDelegate {
 
 class SideMenuViewController: UIViewController {
     
+    @IBOutlet weak var profileImg: ProfileGreenImageView!
+    @IBOutlet weak var coinLbl: UILabel!
+    @IBOutlet weak var heartCountLbl: UILabel!
+    @IBOutlet weak var monthPotLbl: UILabel!
     var delegate: SideMenuViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let avatar = Global.mCurrentUser!.avatar
+        if !avatar.isEmpty {
+            self.profileImg.sd_setImage(with: URL(string: avatar), placeholderImage: PROFILE_DEFAULT_GREEN_AVATAR, options: [], completed: nil)
+        } else {
+            self.profileImg.image = PROFILE_DEFAULT_GREEN_AVATAR
+        }
+        self.coinLbl.text = "\(Global.mCurrentUser!.coin)"
+        self.heartCountLbl.text = "\(Global.likeCount)"
+        self.monthPotLbl.text = "\(Global.monthlyPot)"
     }
     
     func onClickMenuItem(_ item: String) {

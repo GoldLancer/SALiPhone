@@ -24,16 +24,26 @@
 				<string>fb339541323831344</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.68297425247-j4hme78bpgp6m2fuhfv06r6ioh7leh55</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<false/>
 	<key>FacebookAppID</key>
 	<string>339541323831344</string>
-	<key>FacebookDisplayName</key>
-	<string>Social Again Live</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<false/>
-	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<key>FacebookDisplayName</key>
+	<string>Social Again Live</string>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
@@ -42,8 +52,6 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
-	<key>FirebaseAutomaticScreenReportingEnabled</key>
-	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -76,5 +84,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string></string>
 </dict>
 </plist>

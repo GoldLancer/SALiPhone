@@ -17,6 +17,13 @@
 		9619E8E62582A4F400DA9652 /* RoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E8E52582A4F400DA9652 /* RoundView.swift */; };
 		9619E8F12582B50600DA9652 /* PulseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E8EF2582B50600DA9652 /* PulseCollectionViewCell.swift */; };
 		9619E8F22582B50600DA9652 /* PulseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9619E8F02582B50600DA9652 /* PulseCollectionViewCell.xib */; };
+		9619E8F725837E3900DA9652 /* CommentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E8F625837E3900DA9652 /* CommentObject.swift */; };
+		9619E8FD25838D8A00DA9652 /* AllStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E8FC25838D8A00DA9652 /* AllStreamViewController.swift */; };
+		9619E90225838DC200DA9652 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E90125838DC200DA9652 /* ProfileViewController.swift */; };
+		9619E90425838DEA00DA9652 /* MyStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E90325838DEA00DA9652 /* MyStreamViewController.swift */; };
+		9619E90625838E0200DA9652 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E90525838E0200DA9652 /* NewsFeedViewController.swift */; };
+		9619E90E25838FF600DA9652 /* StreamCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9619E90C25838FF600DA9652 /* StreamCollectionViewCell.swift */; };
+		9619E90F25838FF600DA9652 /* StreamCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9619E90D25838FF600DA9652 /* StreamCollectionViewCell.xib */; };
 		961DE13E2580533E00A22CAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DE13D2580533E00A22CAF /* AppDelegate.swift */; };
 		961DE1452580533E00A22CAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961DE1432580533E00A22CAF /* Main.storyboard */; };
 		961DE1472580534000A22CAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961DE1462580534000A22CAF /* Assets.xcassets */; };
@@ -51,6 +58,9 @@
 		962B4996258181FD0034E44A /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962B4995258181FD0034E44A /* SideMenuViewController.swift */; };
 		962B499E25818F840034E44A /* ProfileGreenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962B499D25818F840034E44A /* ProfileGreenImageView.swift */; };
 		962B49A325818FCA0034E44A /* ProfileWhiteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962B49A225818FCA0034E44A /* ProfileWhiteImageView.swift */; };
+		962D89AA2583ED800012949E /* BaseContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962D89A92583ED800012949E /* BaseContainerViewController.swift */; };
+		962D89B3258407B30012949E /* FilterStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962D89B2258407B20012949E /* FilterStreamViewController.swift */; };
+		962D89B8258431BA0012949E /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962D89B7258431BA0012949E /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		BE1622A7BB60D11C9EA0B86A /* Pods_Social_Again_LiveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2AFB806EE98A7BB5DEC1C22 /* Pods_Social_Again_LiveTests.framework */; };
 		E6E55DA00CBE8C8E1CEE0861 /* Pods_Social_Again_Live.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78FC51D077599DCCFE3EBCAC /* Pods_Social_Again_Live.framework */; };
 /* End PBXBuildFile section */
@@ -87,6 +97,13 @@
 		9619E8E52582A4F400DA9652 /* RoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundView.swift; sourceTree = "<group>"; };
 		9619E8EF2582B50600DA9652 /* PulseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseCollectionViewCell.swift; sourceTree = "<group>"; };
 		9619E8F02582B50600DA9652 /* PulseCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PulseCollectionViewCell.xib; sourceTree = "<group>"; };
+		9619E8F625837E3900DA9652 /* CommentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentObject.swift; sourceTree = "<group>"; };
+		9619E8FC25838D8A00DA9652 /* AllStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStreamViewController.swift; sourceTree = "<group>"; };
+		9619E90125838DC200DA9652 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		9619E90325838DEA00DA9652 /* MyStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStreamViewController.swift; sourceTree = "<group>"; };
+		9619E90525838E0200DA9652 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedViewController.swift; sourceTree = "<group>"; };
+		9619E90C25838FF600DA9652 /* StreamCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamCollectionViewCell.swift; sourceTree = "<group>"; };
+		9619E90D25838FF600DA9652 /* StreamCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamCollectionViewCell.xib; sourceTree = "<group>"; };
 		961DE13A2580533E00A22CAF /* Social Again Live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Again Live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		961DE13D2580533E00A22CAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		961DE1442580533E00A22CAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -127,6 +144,9 @@
 		962B4995258181FD0034E44A /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		962B499D25818F840034E44A /* ProfileGreenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGreenImageView.swift; sourceTree = "<group>"; };
 		962B49A225818FCA0034E44A /* ProfileWhiteImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileWhiteImageView.swift; sourceTree = "<group>"; };
+		962D89A92583ED800012949E /* BaseContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseContainerViewController.swift; sourceTree = "<group>"; };
+		962D89B2258407B20012949E /* FilterStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStreamViewController.swift; sourceTree = "<group>"; };
+		962D89B7258431BA0012949E /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		9A3CC197559B19D766BB7CD6 /* Pods-Social Again Live-Social Again LiveUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Social Again Live-Social Again LiveUITests.debug.xcconfig"; path = "Target Support Files/Pods-Social Again Live-Social Again LiveUITests/Pods-Social Again Live-Social Again LiveUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DC18CF437B8A897F39FBE63C /* Pods_Social_Again_Live_Social_Again_LiveUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Again_Live_Social_Again_LiveUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2AFB806EE98A7BB5DEC1C22 /* Pods_Social_Again_LiveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Again_LiveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +203,36 @@
 				9619E8F02582B50600DA9652 /* PulseCollectionViewCell.xib */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		9619E8FB25838D4900DA9652 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				962D89EA258460980012949E /* News */,
+				962D89E92584608D0012949E /* Profile */,
+				962D89E82584607E0012949E /* MyStreamer */,
+				9619E90A25838FBA00DA9652 /* AllStream */,
+				962D89A92583ED800012949E /* BaseContainerViewController.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
+		9619E90A25838FBA00DA9652 /* AllStream */ = {
+			isa = PBXGroup;
+			children = (
+				9619E90B25838FD100DA9652 /* CellView */,
+				9619E8FC25838D8A00DA9652 /* AllStreamViewController.swift */,
+			);
+			path = AllStream;
+			sourceTree = "<group>";
+		};
+		9619E90B25838FD100DA9652 /* CellView */ = {
+			isa = PBXGroup;
+			children = (
+				9619E90C25838FF600DA9652 /* StreamCollectionViewCell.swift */,
+				9619E90D25838FF600DA9652 /* StreamCollectionViewCell.xib */,
+			);
+			path = CellView;
 			sourceTree = "<group>";
 		};
 		961DE1312580533E00A22CAF = {
@@ -281,6 +331,7 @@
 				9619E89F2582052000DA9652 /* RoundTextField.swift */,
 				9619E8E02582A43F00DA9652 /* RoundLabel.swift */,
 				9619E8E52582A4F400DA9652 /* RoundView.swift */,
+				962D89B7258431BA0012949E /* LeftAlignedCollectionViewFlowLayout.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -321,6 +372,7 @@
 				962B48CA2580C1FC0034E44A /* BaseFeedObject.swift */,
 				962B48CF2580C2330034E44A /* BlasterObject.swift */,
 				962B48D42580C2690034E44A /* TransObject.swift */,
+				9619E8F625837E3900DA9652 /* CommentObject.swift */,
 			);
 			path = Objs;
 			sourceTree = "<group>";
@@ -328,11 +380,45 @@
 		962B497F258166230034E44A /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				962D89B12584076B0012949E /* Filter */,
+				9619E8FB25838D4900DA9652 /* Container */,
 				9619E8D52582A32F00DA9652 /* Custom */,
 				962B4980258166520034E44A /* MainMenuViewController.swift */,
 				962B4995258181FD0034E44A /* SideMenuViewController.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		962D89B12584076B0012949E /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				962D89B2258407B20012949E /* FilterStreamViewController.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		962D89E82584607E0012949E /* MyStreamer */ = {
+			isa = PBXGroup;
+			children = (
+				9619E90325838DEA00DA9652 /* MyStreamViewController.swift */,
+			);
+			path = MyStreamer;
+			sourceTree = "<group>";
+		};
+		962D89E92584608D0012949E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				9619E90125838DC200DA9652 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		962D89EA258460980012949E /* News */ = {
+			isa = PBXGroup;
+			children = (
+				9619E90525838E0200DA9652 /* NewsFeedViewController.swift */,
+			);
+			path = News;
 			sourceTree = "<group>";
 		};
 		B710C747BF639F10E7061C55 /* Frameworks */ = {
@@ -459,6 +545,7 @@
 				961DE2292580A9C100A22CAF /* Montserrat-Thin.ttf in Resources */,
 				961DE2272580A9C100A22CAF /* Montserrat-Regular.ttf in Resources */,
 				961DE2252580A9C100A22CAF /* Montserrat-Light.ttf in Resources */,
+				9619E90F25838FF600DA9652 /* StreamCollectionViewCell.xib in Resources */,
 				961DE2242580A9C100A22CAF /* Montserrat-Bold.ttf in Resources */,
 				961DE14A2580534000A22CAF /* LaunchScreen.storyboard in Resources */,
 				961DE2262580A9C100A22CAF /* Montserrat-Medium.ttf in Resources */,
@@ -635,24 +722,33 @@
 				9619E8E12582A43F00DA9652 /* RoundLabel.swift in Sources */,
 				962B49A325818FCA0034E44A /* ProfileWhiteImageView.swift in Sources */,
 				961DE1AA258068AF00A22CAF /* RoundButton.swift in Sources */,
+				9619E8FD25838D8A00DA9652 /* AllStreamViewController.swift in Sources */,
 				961DE19C258061F000A22CAF /* BaseViewController.swift in Sources */,
+				9619E90E25838FF600DA9652 /* StreamCollectionViewCell.swift in Sources */,
+				9619E90425838DEA00DA9652 /* MyStreamViewController.swift in Sources */,
 				962B4996258181FD0034E44A /* SideMenuViewController.swift in Sources */,
 				961DE25E2580B72800A22CAF /* ChatObject.swift in Sources */,
 				962B498925817F130034E44A /* BaseNavViewController.swift in Sources */,
 				962B48CB2580C1FC0034E44A /* BaseFeedObject.swift in Sources */,
+				9619E90225838DC200DA9652 /* ProfileViewController.swift in Sources */,
 				961DE13E2580533E00A22CAF /* AppDelegate.swift in Sources */,
 				962B48D02580C2330034E44A /* BlasterObject.swift in Sources */,
 				961DE2772580B91800A22CAF /* NotiObject.swift in Sources */,
+				9619E90625838E0200DA9652 /* NewsFeedViewController.swift in Sources */,
 				9619E8A02582052000DA9652 /* RoundTextField.swift in Sources */,
 				962B48D52580C2690034E44A /* TransObject.swift in Sources */,
 				962B499E25818F840034E44A /* ProfileGreenImageView.swift in Sources */,
 				961DE2372580AE1300A22CAF /* BaseUserObject.swift in Sources */,
 				961DE2722580B8FC00A22CAF /* CountryObject.swift in Sources */,
+				962D89B3258407B30012949E /* FilterStreamViewController.swift in Sources */,
+				962D89B8258431BA0012949E /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				961DE2112580A98B00A22CAF /* Constant.swift in Sources */,
 				9619E8F12582B50600DA9652 /* PulseCollectionViewCell.swift in Sources */,
 				9619E8A52582093D00DA9652 /* VerificationViewController.swift in Sources */,
+				962D89AA2583ED800012949E /* BaseContainerViewController.swift in Sources */,
 				961DE2162580A99A00A22CAF /* Global.swift in Sources */,
 				961DE26D2580B89D00A22CAF /* FeedObject.swift in Sources */,
+				9619E8F725837E3900DA9652 /* CommentObject.swift in Sources */,
 				961DE2632580B76600A22CAF /* StreamObject.swift in Sources */,
 				962B4981258166520034E44A /* MainMenuViewController.swift in Sources */,
 				9619E8E62582A4F400DA9652 /* RoundView.swift in Sources */,

@@ -62,6 +62,15 @@ public enum TransactionType: String {
     case INAPP      = "INAPP"
 }
 
+public enum CommentType: String {
+    case COMMENT    = "COMMENT"
+    case SENT_COIN  = "SENT_COIN"
+    case CAME_IN    = "CAME_IN"
+    case CAME_OUT   = "CAME_OUT"
+    case FOLLOW     = "FOLLOW"
+    case UNFOLLOW   = "UNFOLLOW"
+}
+
 let MAIN_BG_DARK_COLOR      = UIColor(named: "main_bg_dark_color")
 let MAIN_BG_LIGHT_COLOR     = UIColor(named: "main_bg_light_color")
 let MAIN_GREEN_COLOR        = UIColor(named: "main_green_color")

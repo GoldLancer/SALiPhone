@@ -98,12 +98,12 @@ class UserObject: BaseUserObject {
     var blasterMonth: Int   = 0
     var isVerified: Bool    = false
     
-    var followings: [[String: BaseUserObject]] = []
-    var followers:  [[String: BaseUserObject]] = []
-    var likes:      [[String: BaseUserObject]] = []
-    var posts:      [[String: BaseFeedObject]] = []
-    var blasters:   [[String: BlasterObject]]  = []
-    var transactions: [[String: TransObject]]  = []
+    var followings: [BaseUserObject] = []
+    var followers:  [BaseUserObject] = []
+    var likes:      [BaseUserObject] = []
+    var posts:      [BaseFeedObject] = []
+    var blasters:   [BlasterObject]  = []
+    var transactions: [TransObject]  = []
     
     override func uploadObjectToFirebase(_ dbUrl: String = USER_DB_NAME) {
         
@@ -197,6 +197,5 @@ class UserObject: BaseUserObject {
         
         let type = value[UserConstant.TYPE] as? String ?? ""
         self.accountType    = AccountType.init(rawValue: type) ?? .GMAIL
-        
     }
 }

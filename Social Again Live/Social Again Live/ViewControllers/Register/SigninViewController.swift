@@ -68,7 +68,7 @@ class SigninViewController: BaseViewController {
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
                 self.hideLoadingView()
-                self.present(Global.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                self.showAlertWithText(errorText: error.localizedDescription)
                 return
             } else {
                 let firebaseAuth = Auth.auth()
@@ -76,7 +76,7 @@ class SigninViewController: BaseViewController {
                     self.getUserInfoFromFBDatabase(fbUser.uid)
                 } else {
                     self.hideLoadingView()
-                    self.present(Global.alertWithText(errorText: "Firebase Authentication Failed!"), animated: true, completion: nil)
+                    self.showAlertWithText(errorText: "Firebase Authentication Failed!")
                     return
                 }
             }
@@ -88,14 +88,14 @@ class SigninViewController: BaseViewController {
         showLoadingView()
         loginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) in
             if let error = error {
-                self.present(Global.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                self.showAlertWithText(errorText: error.localizedDescription)
                 self.hideLoadingView()
                 return
             }
 
             guard let accessToken = AccessToken.current else {
                 print("Failed to get access token")
-                self.present(Global.alertWithText(errorText: "Failed to get access token"), animated: true, completion: nil)
+                self.showAlertWithText(errorText: "Failed to get access token")
                 self.hideLoadingView()
                 return
             }
@@ -131,6 +131,7 @@ class SigninViewController: BaseViewController {
         GIDSignIn.sharedInstance()?.presentingViewController = self
         
         showLoadingView()
+        GIDSignIn.sharedInstance()?.signOut()
         GIDSignIn.sharedInstance().signIn()
     }
 }
@@ -139,13 +140,13 @@ extension SigninViewController: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             self.hideLoadingView()
-            self.present(Global.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+            self.showAlertWithText(errorText: error.localizedDescription)
             return
         }
 
         guard let authentication = user.authentication else {
             self.hideLoadingView()
-            self.present(Global.alertWithText(errorText: "Google Authentication Failed!"), animated: true, completion: nil)
+            self.showAlertWithText(errorText: "Google Authentication Failed!")
             return
         }
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,

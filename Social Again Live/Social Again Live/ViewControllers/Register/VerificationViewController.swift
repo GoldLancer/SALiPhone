@@ -42,7 +42,7 @@ class VerificationViewController: BaseViewController {
     func sendingNewCode() {
         let email = Global.mCurrentUser!.email
         if (email.isEmpty || !Global.isValidEmail(email)) {
-            self.present(Global.alertWithText(errorText: "Please enter valid email adderss"), animated: true, completion: nil)
+            self.showAlertWithText(errorText: "Please enter valid email adderss")
             return;
         }
 
@@ -101,7 +101,7 @@ class VerificationViewController: BaseViewController {
     @IBAction func onClickSendBtn(_ sender: Any) {
         let email = self.emailTxt.text?.trimmingCharacters(in: .whitespaces)
         if !Global.isValidEmail(email!) {
-            self.present(Global.alertWithText(errorText: "Please enter valid email adderss"), animated: true, completion: nil)
+            self.showAlertWithText(errorText: "Please enter valid email adderss")
             return
         }
         
@@ -121,7 +121,7 @@ class VerificationViewController: BaseViewController {
             // Go Main
             Global.goMainView()
         } else {
-            self.present(Global.alertWithText(errorText: "Invalid Code"), animated: true, completion: nil)
+            self.showAlertWithText(errorText: "This Code is not valid, Please check the code again.")
         }
     }
     
@@ -129,7 +129,7 @@ class VerificationViewController: BaseViewController {
         if !self.emailView.isHidden {
             let email = self.emailTxt.text?.trimmingCharacters(in: .whitespaces)
             if !Global.isValidEmail(email!) {
-                self.present(Global.alertWithText(errorText: "Please enter valid email adderss"), animated: true, completion: nil)
+                self.showAlertWithText(errorText: "Please enter valid email adderss")
                 return
             }
             

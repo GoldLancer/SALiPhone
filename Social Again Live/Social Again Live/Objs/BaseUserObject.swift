@@ -21,14 +21,17 @@ class BaseUserObject: NSObject {
     
     func uploadObjectToFirebase(_ dbUrl: String = USER_DB_NAME) {
         let leadRef = Database.database().reference().child(dbUrl).child(self.id)
-        leadRef.updateChildValues([ UserConstant.ID        : self.id,
-                                    UserConstant.NAME      : self.name,
-                                    UserConstant.COUNTRY   : self.country,
-                                    UserConstant.GENDER    : self.gender,
-                                    UserConstant.EMAIL     : self.email,
-                                    UserConstant.PHONE     : self.phone,
-                                    UserConstant.TYPE      : self.accountType.rawValue
-                                    ])
+        leadRef.updateChildValues(getJsonvalue())
+    }
+    
+    func getJsonvalue() -> [String:Any] {
+        return [UserConstant.ID        : self.id,
+                UserConstant.NAME      : self.name,
+                UserConstant.COUNTRY   : self.country,
+                UserConstant.GENDER    : self.gender,
+                UserConstant.EMAIL     : self.email,
+                UserConstant.PHONE     : self.phone,
+                UserConstant.TYPE      : self.accountType.rawValue]
     }
     
     func initUserWithJsonresponse(value: NSDictionary) {

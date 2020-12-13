@@ -20,6 +20,7 @@ class MainMenuViewController: BaseNavViewController{
     @IBOutlet weak var newsFeedBtn: RoundButton!
     @IBOutlet weak var coinLbl: UILabel!
     @IBOutlet weak var notiBtn: UIButton!
+    @IBOutlet weak var filterLbl: UILabel!
     
     @IBOutlet weak var filterSection: UIView!
     @IBOutlet weak var pulseSection: UIView!
@@ -44,6 +45,12 @@ class MainMenuViewController: BaseNavViewController{
     let feedRef = Database.database().reference().child(POST_DB_NAME)
     let userRef = Database.database().reference().child(USER_DB_NAME)
     let streamRef = Database.database().reference().child(VIDEO_DB_NAME)
+    let countryRef = Database.database().reference().child(COUNTRY_DB_NAME)
+    let monthlyRef = Database.database().reference().child(MONTHLY_POT_DB_NAME)
+    
+    var nameKey: String     = ""
+    var countryKey: String  = ""
+    var genderKey: String   = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +61,7 @@ class MainMenuViewController: BaseNavViewController{
         
         searchView.setCornerRadius()
         
-        // Init Category CollectionView
+        // MARK: Init Category CollectionView
         let bundle = Bundle(for: type(of: self))
         let categoryCellNib = UINib(nibName: "CategoryCollectionViewCell", bundle: bundle)
         self.categoryTV.tag = CATEGORY_VIEW_TAG
@@ -62,7 +69,7 @@ class MainMenuViewController: BaseNavViewController{
         self.categoryTV.delegate = self
         self.categoryTV.dataSource = self
         
-        // Init Pulse CollectionView
+        // MARK: Init Pulse CollectionView
         let pulseCellNib = UINib(nibName: "PulseCollectionViewCell", bundle: bundle)
         self.pulseTV.tag = PULSE_VIEW_TAG
         self.pulseTV.register(pulseCellNib, forCellWithReuseIdentifier: "PulseCollectionViewCell")
@@ -71,10 +78,19 @@ class MainMenuViewController: BaseNavViewController{
         
         self.coinLbl.text = "\(Global.mCurrentUser!.coin)"
         
-        addFirebaseObserve()
+        addFirebaseObserves()
         
         showDashboardView()
         startPulseTimer()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        removeFirebaseObserves()
+    }
+    
+    func initContainerViews() {
+        
     }
     
     func hideAllContainerView() {
@@ -124,47 +140,250 @@ class MainMenuViewController: BaseNavViewController{
         self.myStreamerContainer.isHidden = false
     }
     
-    func addFirebaseObserve() {
+    // MARK: ADD Firebase Observers
+    func addFirebaseObserves() {
+        // Firebase Observe For All Feeds
         feedRef.observe(.value) { (snapshot) in
-            
             Global.allPostObjs.removeAll()
+            
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
                 if let data = snap.value as? NSDictionary {
                     let postObj = FeedObject()
                     postObj.initUserWithJsonresponse(value: data)
+                    
                     Global.allPostObjs.append(postObj)
                 }
             }
             
-            self.loadAvailableContents()
+            self.loadAvailableFeeds()
         }
+        
+        // Firebase Observe For All Live Streamings
         streamRef.observe(.value) { (snapshot) in
+            Global.allStreamObj.removeAll()
             
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                if let data = snap.value as? NSDictionary {
+                    let streamObj = StreamObject()
+                    streamObj.initUserWithJsonresponse(value: data)
+                    
+                    Global.allStreamObj.append(streamObj)
+                }
+            }
+            Global.allStreamObj.sort(by: { $0.created > $1.created })
+            
+            self.loadAvailableStreams()
+        }
+        
+        // Firebase Observe For All Countries
+        countryRef.observe(.value) { (snapshot) in
+            Global.countries.removeAll()
+            
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                if let data = snap.value as? NSDictionary {
+                    let countryName = data["name"] as? String ?? ""
+                    
+                    Global.countries.append(countryName)
+                }
+            }
+        }
+        
+        // Firebase Observe For Monthly Pot
+        monthlyRef.observe(.value) { (snapshot) in
+            if let pot = snapshot.value as? Int {
+                Global.monthlyPot = pot
+            }
+        }
+        
+        // Firebase Observe For Likes Me
+        userRef.child(Global.mCurrentUser!.id).child(UserConstant.LIKES).observe(.value) { (snapshot) in
+            if snapshot.exists() {
+                Global.likeCount = Int(snapshot.childrenCount)
+            } else {
+                Global.likeCount = 0
+            }
+        }
+        
+        // Firebase Observe For Following Users
+        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWINGS).observe(.value) { (snapshot) in
+            Global.mCurrentUser!.followings.removeAll()
+            Global.followingObjs.removeAll()
+            
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                if let data = snap.value as? NSDictionary {
+                    let uObj = BaseUserObject()
+                    uObj.initUserWithJsonresponse(value: data)
+                    
+                    Global.mCurrentUser!.followings.append(uObj)
+                    Global.followingObjs.append(uObj)
+                }
+            }
+            
+            NotificationCenter.default.post(name: .didReloadFollowings, object: nil)
+        }
+        
+        // Firebase Observe For Following Users
+        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWERS).observe(.value) { (snapshot) in
+            Global.mCurrentUser!.followers.removeAll()
+            Global.followerObjs.removeAll()
+            
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                if let data = snap.value as? NSDictionary {
+                    let uObj = BaseUserObject()
+                    uObj.initUserWithJsonresponse(value: data)
+                    
+                    Global.mCurrentUser!.followers.append(uObj)
+                    Global.followerObjs.append(uObj)
+                }
+            }
+            
+            self.reloadMyStreamers()
+            NotificationCenter.default.post(name: .didReloadFollowers, object: nil)
         }
     }
     
-    func loadAvailableContents() {
+    func removeFirebaseObserves() {
+        feedRef.removeAllObservers()
+        streamRef.removeAllObservers()
+        countryRef.removeAllObservers()
+        monthlyRef.removeAllObservers()
+        
+        userRef.child(Global.mCurrentUser!.id).child(UserConstant.LIKES).removeAllObservers()
+        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWINGS).removeAllObservers()
+        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWERS).removeAllObservers()
+    }
+    
+    func loadAvailableStreams() {
+        
+        var filterStr = self.nameKey
+        filterStr = filterStr.isEmpty ? self.countryKey : "\(filterStr)\(self.countryKey.isEmpty ? "" : ", \(self.countryKey)")"
+        filterStr = filterStr.isEmpty ? self.genderKey : "\(filterStr)\(self.genderKey.isEmpty ? "" : ", \(self.genderKey)")"
+        if filterStr.isEmpty {
+            filterStr = "All"
+        }
+        self.filterLbl.text = filterStr
+
+        Global.filterStreamObjs.removeAll()
+        
+        for sObj in Global.allStreamObj {
+            if sObj.owner.id == Global.mCurrentUser?.id {
+                continue
+            }
+            
+            if !sObj.isOnline {
+                continue
+            }
+            
+            if isMatchedSearchOption(sObj) {
+                if selectedCategoryIndex > 0 {
+                    let category = CATEGORY_ITEMS[selectedCategoryIndex]
+                    if sObj.category == category {
+                        Global.filterStreamObjs.append(sObj)
+                    }                    
+                } else {
+                    Global.filterStreamObjs.append(sObj)
+                }
+            }
+            
+        }
+        
+        NotificationCenter.default.post(name: .didReloadAllSteams, object: nil)
+        reloadMyStreamers()
+    }
+    
+    func reloadMyStreamers() {
+        Global.mySteamersObjs.removeAll()
+        
+        for sObj in Global.allStreamObj {
+            if sObj.owner.id == Global.mCurrentUser?.id {
+                continue
+            }
+            
+            if !sObj.isOnline {
+                continue
+            }
+            
+            if Global.alreadyFollowed(sObj.owner.id) {
+                Global.mySteamersObjs.append(sObj)
+            }
+        }
+        
+        NotificationCenter.default.post(name: .didReloadMyStreamers, object: nil)
+    }
+    
+    func isMatchedSearchOption(_ obj: StreamObject) -> Bool {
+
+        if !self.nameKey.isEmpty {
+            if obj.owner.name.lowercased().contains(self.nameKey.lowercased())
+                || obj.videoTitle.lowercased().contains(self.nameKey.lowercased()) {
+                return true
+            }
+        }
+        if !self.countryKey.isEmpty {
+            if obj.owner.country == self.countryKey {
+                return true
+            }
+        }
+        if !self.genderKey.isEmpty {
+            if obj.owner.gender == self.genderKey {
+                return true
+            }
+        }
+        
+        if self.nameKey.isEmpty && self.countryKey.isEmpty && self.genderKey.isEmpty {
+            return true
+        }
+
+        return false;
+    }
+    
+    func loadAvailableFeeds() {
         Global.followPostObjs.removeAll()
         Global.myPostObjs.removeAll()
         Global.pulsePostObjs.removeAll()
 
         for pObj in Global.allPostObjs {
-//            if (isAvaiableFeed(pObj.ownerId)) {
-//                GlobalManager.followPostObjs.add(pObj);
-//            }
-            if pObj.canShared {
-                Global.pulsePostObjs.append(pObj);
+            if isAvaiableFeed(pObj.ownerId) {
+                Global.followPostObjs.append(pObj)
             }
-//            if (pObj.ownerId.equals(GlobalManager.mUserObj.id)) {
-//                GlobalManager.myPostObjs.add(pObj);
-//            }
+            if pObj.canShared {
+                Global.pulsePostObjs.append(pObj)
+            }
+            if pObj.ownerId == Global.mCurrentUser!.id {
+                Global.myPostObjs.append(pObj)
+            }
         }
 
-//        Collections.sort(GlobalManager.followPostObjs, PostObj.IDComparator);
-//        Collections.sort(GlobalManager.myPostObjs, PostObj.IDComparator);
-//
-//        this.reloadPostObjs();
+        Global.followPostObjs.sort(by: {$0.postId > $1.postId})
+        Global.myPostObjs.sort(by: {$0.postId > $1.postId})
+
+        NotificationCenter.default.post(name: .didReloadAllFeeds, object: nil)
+        reloadMyStreamers()
+    }
+    
+    func isAvaiableFeed(_ ownerID: String) -> Bool {
+        if Global.mCurrentUser!.id == ownerID {
+            return true
+        }
+        
+        for uObj in Global.followerObjs {
+            if uObj.id == ownerID {
+                return true
+            }
+        }
+        
+        for uObj in Global.followingObjs {
+            if uObj.id == ownerID {
+                return true
+            }
+        }
+        
+        return false
     }
     
     func stopPulseTimer() {
@@ -204,16 +423,47 @@ class MainMenuViewController: BaseNavViewController{
         self.pulseTV.reloadData()
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "AllStreamVCID" {
+            if let allStreamVC = segue.destination as? AllStreamViewController {
+                allStreamVC.delegate = self
+            }
+        }
+        
+        if segue.identifier == "NewsFeedVCID" {
+            if let newFeedVC = segue.destination as? NewsFeedViewController {
+                newFeedVC.delegate = self
+            }
+        }
+        
+        if segue.identifier == "MyStreamVCID" {
+            if let myStreamVC = segue.destination as? MyStreamViewController {
+                myStreamVC.delegate = self
+            }
+        }
+        
+        if segue.identifier == "ProfileVCID" {
+            if let profileVC = segue.destination as? ProfileViewController {
+                profileVC.delegate = self
+            }
+        }
+        
+        if segue.identifier == "Main2Filter" {
+            if let filterVC = segue.destination as? FilterStreamViewController {
+                filterVC.delegate = self
+            }
+        }
     }
-    */
 
+    // MARK: - UI ACTIONS
+    @IBAction func onClickFilterBtn(_ sender: Any) {
+        self.performSegue(withIdentifier: "Main2Filter", sender: nil)
+    }
+    
     @IBAction func onClickNotificationBtn(_ sender: Any) {
     }
     
@@ -225,45 +475,7 @@ class MainMenuViewController: BaseNavViewController{
     }
 }
 
-extension MainMenuViewController: SideMenuViewControllerDelegate {
-    func onClickMenuItem(_ item: String) {
-        print("Item Clicked : \(item)")
-        switch item {
-        case "header":
-            showDashboardView()
-            break
-        case "profile":
-            showProfileView()
-            break
-        case "chat":
-            break
-        case "stream":
-            showMyStreamerView()
-            break
-        case "find":
-            break
-        case "transaction":
-            break
-        case "setting":
-            break
-        case "exit":
-            do { try Auth.auth().signOut() }
-            catch { print("already logged out") }
-            
-            Global.signoutWithUI()
-            break
-        case "heart":
-            break
-        case "monthpot":
-            break
-        case "upgrade":
-            break
-            
-        default:
-            break
-        }
-    }
-}
+// MARK: - CollectionView Delegation
 
 extension MainMenuViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -350,10 +562,54 @@ extension MainMenuViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: SideMenu Delegation
+extension MainMenuViewController: SideMenuViewControllerDelegate {
+    func onClickMenuItem(_ item: String) {
+        print("Item Clicked : \(item)")
+        switch item {
+        case "header":
+            showDashboardView()
+            break
+        case "profile":
+            showProfileView()
+            break
+        case "chat":
+            break
+        case "stream":
+            showMyStreamerView()
+            break
+        case "find":
+            break
+        case "transaction":
+            break
+        case "setting":
+            break
+        case "exit":
+            do { try Auth.auth().signOut() }
+            catch { print("already logged out") }
+            
+            Global.signoutWithUI()
+            break
+        case "heart":
+            break
+        case "monthpot":
+            break
+        case "upgrade":
+            break
+            
+        default:
+            break
+        }
+    }
+}
+
+// MARK: Cell Delegations
 extension MainMenuViewController: CategoryCollectionViewCellDelegate {
     func onSelectCategory(_ index: Int) {
         self.selectedCategoryIndex = index
         self.categoryTV.reloadData()
+        
+        self.loadAvailableStreams()
     }
 }
 
@@ -367,6 +623,55 @@ extension MainMenuViewController: PulseCollectionViewCellDelegate {
     }
 }
 
+// MARK: FilterView Delegation
+extension MainMenuViewController: FilterStreamViewControllerDelegate {
+    func resetFilter() {
+        self.nameKey = ""
+        self.countryKey = ""
+        self.genderKey = ""
+        self.selectedCategoryIndex = -1
+        
+        self.categoryTV.reloadData()
+        self.loadAvailableStreams()
+    }
+    
+    func filterByKeys(nameKey: String, countryKey: String, genderKey: String) {
+        self.nameKey = nameKey
+        self.countryKey = countryKey
+        self.genderKey = genderKey
+        
+        self.loadAvailableStreams()
+    }
+}
+
+// MARK: ContainerView Delegations
+extension MainMenuViewController: AllStreamViewControllerDelegate {
+    
+}
+
+extension MainMenuViewController: MyStreamViewControllerDelegate {
+    
+}
+
+extension MainMenuViewController: NewsFeedViewControllerDelegate {
+    
+}
+
+extension MainMenuViewController: ProfileViewControllerDelegate {
+    
+}
+
+// MARK: Notification Extention
+extension Notification.Name {
+    static let didReloadAllFeeds    = Notification.Name("didReloadAllFeeds")
+    static let didReloadAllSteams   = Notification.Name("didReloadAllSteams")
+    static let didReloadFollowings  = Notification.Name("didReloadFollowings")
+    static let didReloadFollowers   = Notification.Name("didReloadFollowers")
+    static let didReloadMyStreamers   = Notification.Name("didReloadMyStreamers")
+    
+}
+
+// MARK: View Extentsions
 extension UIView {
     func setCornerRadius(_ radius: CGFloat = 10.0) {
         self.layer.cornerRadius = radius

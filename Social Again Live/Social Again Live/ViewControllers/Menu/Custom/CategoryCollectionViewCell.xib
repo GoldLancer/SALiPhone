@@ -66,7 +66,7 @@
                 <outlet property="categoryLbl" destination="uD7-zi-Zoy" id="LrF-Vf-61P"/>
                 <outlet property="roundView" destination="7hd-6a-Qzv" id="Hrp-fa-JWH"/>
             </connections>
-            <point key="canvasLocation" x="185.50724637681162" y="5.3571428571428568"/>
+            <point key="canvasLocation" x="-132" y="-32"/>
         </collectionViewCell>
     </objects>
     <resources>
