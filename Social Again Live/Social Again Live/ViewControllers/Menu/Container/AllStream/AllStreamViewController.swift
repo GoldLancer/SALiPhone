@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AllStreamViewControllerDelegate {
-    
+    func selectUserProfile(_ userId: String)
 }
 
 class AllStreamViewController: BaseContainerViewController {
@@ -84,7 +84,7 @@ extension AllStreamViewController: UICollectionViewDelegate, UICollectionViewDat
         } else {
             cell.profileLbl.text = streamObj.videoTitle
         }
-        
+        print("Live Streaming : \(streamObj.owner.id), \(streamObj.streamId)")
         return cell
     }
 }
@@ -112,6 +112,13 @@ extension AllStreamViewController: UICollectionViewDelegateFlowLayout {
 // MARK: CollectionViewCell Delegation
 extension AllStreamViewController: StreamCollectionViewCellDelegate {
     func onClickedOwnerProfile(_ index: Int) {
+        let streamObj = Global.filterStreamObjs[index]
+        self.delegate?.selectUserProfile(streamObj.owner.id)
+    }
+    
+    func selectedStreaming(_ index: Int) {
+        let streamObj = Global.filterStreamObjs[index]
         
+        self.showLiveSteamView(streamObj)
     }
 }

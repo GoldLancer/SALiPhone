@@ -12,6 +12,7 @@ struct StreamConstant {
     
     static let ID                   = "streamId"
     static let OWNER                = "owner"
+    static let PARTNER              = "partner"
     static let TITLE                = "videoTitle"
     static let THUMBURL             = "videoThumbnail"
     static let COUNTRY              = "country"
@@ -25,6 +26,7 @@ struct StreamConstant {
     static let IS_GHOST             = "isGhost"
     static let IS_ONLINE            = "isOnline"
     static let IS_PAUSED            = "paused"
+    static let IS_MULTI             = "isMulti"
     
     static let COMMENTS             = "comments"
     static let JOINERS              = "joiners"
@@ -33,12 +35,14 @@ struct StreamConstant {
 class StreamObject: NSObject {
     
     var owner: BaseUserObject   = BaseUserObject()
+    var partner: PartnerObject  = PartnerObject()
+    
     var streamId: String        = ""
     var videoTitle: String      = ""
     var videoThumbnail: String  = ""
     var country: String         = ""
     var created: String         = ""
-    var category: String        = ""
+    var category: String        = CATEGORY_ITEMS[0]
     var aboutUrl: String        = ""
     
     var tuCoins: Int            = 0
@@ -47,6 +51,7 @@ class StreamObject: NSObject {
     var isGhost: Bool           = false
     var isOnline: Bool          = false
     var paused: Bool            = false
+    var isMulti: Bool           = false
     
     var comments: [CommentObject] = []
     var joiners: [BaseUserObject] = []
@@ -68,8 +73,10 @@ class StreamObject: NSObject {
                                       StreamConstant.IS_GHOST  : self.isGhost,
                                       StreamConstant.IS_ONLINE : self.isOnline,
                                       StreamConstant.IS_PAUSED : self.paused,
+                                      StreamConstant.IS_MULTI  : self.isMulti,
                                       
-                                      StreamConstant.OWNER     : self.owner.getJsonvalue()
+                                      StreamConstant.OWNER     : self.owner.getBaseJsonvalue(),
+                                      StreamConstant.PARTNER   : self.partner.getObjectJsonvalue()
                                     ])
     }
     
@@ -79,7 +86,7 @@ class StreamObject: NSObject {
         self.videoThumbnail = value[StreamConstant.THUMBURL] as? String ?? ""
         self.country        = value[StreamConstant.COUNTRY] as? String ?? ""
         self.created        = value[StreamConstant.CREATED] as? String ?? ""
-        self.category       = value[StreamConstant.CATEGORY] as? String ?? ""
+        self.category       = value[StreamConstant.CATEGORY] as? String ?? CATEGORY_ITEMS[0]
         self.aboutUrl       = value[StreamConstant.ABOUT_URL] as? String ?? ""
         
         self.tuCoins        = value[StreamConstant.TUCOINS] as? Int ?? 0
@@ -93,17 +100,27 @@ class StreamObject: NSObject {
             self.owner.initUserWithJsonresponse(value: ownerData)
         }
         
+        if let partnerData = value[StreamConstant.PARTNER] as? NSDictionary {
+            self.partner.initObjectWithJsonresponse(value: partnerData)
+        }
+        
         self.comments.removeAll()
         if let commentArray = value[StreamConstant.COMMENTS] as? [NSDictionary] {
             for cData in commentArray {
+                let cObj = CommentObject()
+                cObj.initObjectWithJsonresponse(value: cData)
                 
+                self.comments.append(cObj)
             }
         }
         
         self.joiners.removeAll()
         if let joinerArray = value[StreamConstant.JOINERS] as? [NSDictionary] {
             for jData in joinerArray {
+                let jObj = BaseUserObject()
+                jObj.initUserWithJsonresponse(value: jData)
                 
+                self.joiners.append(jObj)
             }
         }
         

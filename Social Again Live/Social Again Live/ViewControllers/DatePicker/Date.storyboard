@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Date View Controller-->
+        <scene sceneID="oWm-cc-u2G">
+            <objects>
+                <viewController storyboardIdentifier="DateDialog" id="wZh-rn-zJy" customClass="DateViewController" customModule="Social_Again_Live" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YIr-3m-M6A">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nI-Wd-8dj">
+                                <rect key="frame" x="0.0" y="212" width="414" height="482"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5jt-ST-tuO">
+                                        <rect key="frame" x="62" y="0.0" width="290" height="358.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5p-e2-JsJ">
+                                        <rect key="frame" x="62" y="381" width="290" height="44"/>
+                                        <color key="backgroundColor" name="main_green_color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="pil-P4-rU9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" name="main_white_color"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onClickDoneBtn:" destination="wZh-rn-zJy" eventType="touchUpInside" id="ccm-Eb-awP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="5jt-ST-tuO" firstAttribute="width" secondItem="0nI-Wd-8dj" secondAttribute="width" multiplier="0.7" id="FlM-H8-184"/>
+                                    <constraint firstAttribute="bottom" secondItem="V5p-e2-JsJ" secondAttribute="bottom" constant="57" id="Qcf-J9-aOD"/>
+                                    <constraint firstItem="V5p-e2-JsJ" firstAttribute="top" secondItem="5jt-ST-tuO" secondAttribute="bottom" constant="22.5" id="XQC-dg-sfQ"/>
+                                    <constraint firstItem="V5p-e2-JsJ" firstAttribute="centerX" secondItem="0nI-Wd-8dj" secondAttribute="centerX" id="Y55-WN-BEj"/>
+                                    <constraint firstItem="5jt-ST-tuO" firstAttribute="centerX" secondItem="0nI-Wd-8dj" secondAttribute="centerX" id="bVZ-to-4qe"/>
+                                    <constraint firstItem="V5p-e2-JsJ" firstAttribute="width" secondItem="5jt-ST-tuO" secondAttribute="width" id="bzK-hp-QFl"/>
+                                    <constraint firstItem="5jt-ST-tuO" firstAttribute="top" secondItem="0nI-Wd-8dj" secondAttribute="top" id="dW4-qj-zGA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="u6B-bX-O3a"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="0nI-Wd-8dj" firstAttribute="centerX" secondItem="u6B-bX-O3a" secondAttribute="centerX" id="6Ii-eN-79K"/>
+                            <constraint firstItem="0nI-Wd-8dj" firstAttribute="width" secondItem="YIr-3m-M6A" secondAttribute="width" id="dRQ-L9-KZE"/>
+                            <constraint firstItem="5jt-ST-tuO" firstAttribute="height" secondItem="YIr-3m-M6A" secondAttribute="height" multiplier="0.4" id="hDV-7g-hRK"/>
+                            <constraint firstItem="0nI-Wd-8dj" firstAttribute="centerY" secondItem="u6B-bX-O3a" secondAttribute="centerY" id="vxN-9z-Qpv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pickerView" destination="5jt-ST-tuO" id="VeK-d3-qFu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="knD-kV-9B0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="173.91304347826087" y="195.53571428571428"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="main_green_color">
+            <color red="0.48600000143051147" green="0.75300002098083496" blue="0.27099999785423279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="main_white_color">
+            <color red="0.9570000171661377" green="0.9570000171661377" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

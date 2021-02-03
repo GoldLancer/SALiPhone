@@ -12,6 +12,20 @@ target 'Social Again Live' do
   pod 'Alamofire', '~> 4.9.1'
   pod 'SDWebImage', '~> 5.0'
   pod 'SideMenu'
+  pod 'PWSwitch'
+  pod 'SwiftySound'
+  pod 'Toast-Swift', '~> 5.0.1'
+  pod 'SKCountryPicker'
+  pod 'MDatePickerView'
+  pod 'ESPullToRefresh'
+  pod 'BEMCheckBox'
+  pod 'youtube-ios-player-helper-swift'
+  pod 'PushNotifications'
+  
+  target 'WebRTCiOSSDK' do
+    # For WebRTCiOSSDK
+    pod 'Starscream', '~> 3.1.1'
+  end  
   
   # Add Google SDK
   pod 'GoogleSignIn'
@@ -27,6 +41,8 @@ target 'Social Again Live' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Database'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Storage'
 
   target 'Social Again LiveTests' do
     inherit! :search_paths

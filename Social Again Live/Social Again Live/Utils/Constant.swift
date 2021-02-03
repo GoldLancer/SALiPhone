@@ -71,6 +71,8 @@ public enum CommentType: String {
     case UNFOLLOW   = "UNFOLLOW"
 }
 
+let ADMIN_ID                = "admin"
+
 let MAIN_BG_DARK_COLOR      = UIColor(named: "main_bg_dark_color")
 let MAIN_BG_LIGHT_COLOR     = UIColor(named: "main_bg_light_color")
 let MAIN_GREEN_COLOR        = UIColor(named: "main_green_color")
@@ -85,7 +87,9 @@ let FONT_NAME_MONT_SEMIBOLD = "Montserrat-SemiBold"
 let FONT_NAME_MONT_THIN     = "Montserrat-Thin"
 
 // AntMedia Server
+let STREAM_API_URL = "http://216.128.130.197/api.php?"
 let SERVER_ADDRESS = "216.128.130.197:5080";
+let SERVER_TOKEN = "AMS545e6789b70f18a233a53dd03b2505"
 let TUCOIN_PAYOUT_PDF_URL = "http://216.128.130.197/tucoin_payout.pdf";
 
 let PAYONEER_SIGNUP_URL = "https://payouts.payoneer.com/partners/or.aspx?pid=YOYIZC74IO2s4KZQp7tgsw==&BusinessLine=3&UsePurpose=3&Volume=above-100000&webInteraction=webpage_accounts&from=login";
@@ -107,6 +111,9 @@ let VERSION_DB_NAME = "androidVersion";
 // Admin
 let SAL_ADMIN_EMAIL = "socialagainlive@gmail.com";
 let SAL_ADMIN_ID = "admin";
+
+// Date
+let MONTH_NAME = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 // Firebase Storage Directory
 let STORAGE_VIDEO_NAME = "videos/";
@@ -164,7 +171,35 @@ let BUY_ITEM_LIMIT = 5;
 
 
 // Category
-let CATEGORY_ITEMS = ["Music", "Pod Cast", "Gamer", "Sports", "Comedy", "How To", "FundRaiser", "Cooking", "Dance Battle", "Business"]
+let CATEGORY_ITEMS = ["Music", "Pod Cast", "Gamer", "Sports", "Comedy", "How To", "FundRaiser", "Cooking", "Religion", "Business"]
+let TUCOIN_ITEMS = [100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+
+// Coins
+let MONEYCOIN_VALUES = [ 1, 5, 10, 25, 50, 75, 125, 300, 450, 500, 700, 1000]
+let SUPERCOIN_VALUES = [ 25, 75, 100, 150, 180, 250, 350, 400, 600, 750, 800, 1000, 2500, 3000, 4000, 6500, 7000, 8500, 9750, 12000, 14500, 18000, 20000, 24000]
 
 let PROFILE_DEFAULT_GREEN_AVATAR = UIImage(named: "ic_default_profile_green")
 let PROFILE_DEFAULT_WHITE_AVATAR = UIImage(named: "ic_default_profile_white")
+
+// InApp
+let IAP_ITEM_ICONS = ["ic_upgrade_coin_200", "ic_upgrade_coin_500", "ic_upgrade_coin_1000", "ic_upgrade_coin_2000", "ic_upgrade_coin_3000", "ic_upgrade_coin_5000", "ic_upgrade_coin_10000", "ic_upgrade_coin_30000"]
+let IAP_ITEM_COSTS = [2.75, 5.75, 10.75, 21.50, 31.50, 51.50, 103.00, 306.00]
+
+// FCM Properties
+let FCM_TAG: String = "FcmNotificationBuilder"
+let FCM_SERVER_API_KEY = "AAAAD-bYAV8:APA91bGpfZaRBSsEzIff-WpaHMYZ9yvAlch8vkoo9M2AWs8_NZbYx-mp1KXeCmu3x3a3VE_sbEuglrv0bGVrcVL8myTdMJyZoqdR7SAhWEKhaDo6hb45cEcv-PuODNFd2PG9IY2Bmi3S"
+let FCM_CONTENT_TYPE = "Content-Type"
+let FCM_APPLICATION_JSON = "application/json"
+let FCM_AUTHORIZATION = "Authorization"
+let FCM_URL = "https://fcm.googleapis.com/fcm/send"
+
+let FCM_KEY_TO = "to"
+let FCM_KEY_DATA = "data"
+let FCM_KEY_TEXT = "body"
+let FCM_KEY_USERNAME = "username"
+let FCM_KEY_SENDERID = "senderid"
+let FCM_KEY_STREAMINGID = "streamingId"
+let FCM_KEY_RECEIVERID = "receiverid"
+let FCM_KEY_RECEIVER = "receiver"
+let FCM_KEY_TYPE = "type"
+let FCM_KEY_SENDTIME = "sendingtime"

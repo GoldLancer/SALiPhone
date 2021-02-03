@@ -42,8 +42,7 @@ class SigninViewController: BaseViewController {
             Global.mCurrentUser = UserObject()
         }
         
-        let userRef = Database.database().reference().child(USER_DB_NAME)
-        userRef.child(uId).observeSingleEvent(of: .value) { (snapshot) in
+        Global.userRef.child(uId).observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.exists() {
                 if let userValue = snapshot.value as? NSDictionary {
                     Global.mCurrentUser?.initUserWithJsonresponse(value: userValue)

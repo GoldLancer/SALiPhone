@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="CTCollectionViewCell" reuseIdentifier="CTCollectionViewCell" id="gTV-IL-0wX" customClass="CTCollectionViewCell" customModule="Social_Again_Live" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="294" height="185"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="294" height="185"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjx-g2-v2J" customClass="RoundButton" customModule="Social_Again_Live" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="72.5" width="48" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="s8r-Bs-eys"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
+                        <state key="normal" title="Music">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="onClickCTBtn:" destination="gTV-IL-0wX" eventType="touchUpInside" id="oNY-nV-Zld"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="jjx-g2-v2J" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" id="Esn-9w-gtT"/>
+                <constraint firstItem="jjx-g2-v2J" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Rok-BF-oGf"/>
+            </constraints>
+            <size key="customSize" width="294" height="185"/>
+            <connections>
+                <outlet property="categoryBtn" destination="jjx-g2-v2J" id="KI6-ix-jYy"/>
+            </connections>
+            <point key="canvasLocation" x="331.8840579710145" y="78.683035714285708"/>
+        </collectionViewCell>
+    </objects>
+</document>

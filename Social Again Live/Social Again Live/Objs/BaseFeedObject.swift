@@ -14,10 +14,14 @@ class BaseFeedObject: NSObject {
     
     func uploadObjectToFirebase(_ dbUrl: String = POST_DB_NAME) {
         let leadRef = Database.database().reference().child(dbUrl).child(self.postId)
-        leadRef.updateChildValues([ FeedConstant.ID : self.postId ])
+        leadRef.updateChildValues(self.getJsonValue())
     }
     
-    func initUserWithJsonresponse(value: NSDictionary) {
+    func getJsonValue() -> [String: Any] {
+        return [FeedConstant.ID : self.postId]
+    }
+    
+    func initObjectWithJsonresponse(value: NSDictionary) {
         self.postId = value[FeedConstant.ID] as? String ?? ""
     }
     

@@ -114,9 +114,8 @@ class VerificationViewController: BaseViewController {
         if code == verificationCode || code == "99999" {
             Global.mCurrentUser!.isVerified = true
             
-            let userRef = Database.database().reference().child(USER_DB_NAME)
-            userRef.child(Global.mCurrentUser!.id).child(UserConstant.EMAIL).setValue(Global.mCurrentUser!.email)
-            userRef.child(Global.mCurrentUser!.id).child(UserConstant.IS_VERIFIED).setValue(true)
+            Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.EMAIL).setValue(Global.mCurrentUser!.email)
+            Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.IS_VERIFIED).setValue(true)
             
             // Go Main
             Global.goMainView()

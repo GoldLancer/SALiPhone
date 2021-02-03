@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FirebaseDatabase
+import Firebase
 
 class BaseUserObject: NSObject {
     
@@ -21,10 +21,10 @@ class BaseUserObject: NSObject {
     
     func uploadObjectToFirebase(_ dbUrl: String = USER_DB_NAME) {
         let leadRef = Database.database().reference().child(dbUrl).child(self.id)
-        leadRef.updateChildValues(getJsonvalue())
+        leadRef.updateChildValues(getBaseJsonvalue())
     }
     
-    func getJsonvalue() -> [String:Any] {
+    func getBaseJsonvalue() -> [String:Any] {
         return [UserConstant.ID        : self.id,
                 UserConstant.NAME      : self.name,
                 UserConstant.COUNTRY   : self.country,

@@ -73,6 +73,7 @@ class BaseNavViewController: BaseViewController {
     
     @objc func onClickGoLiveBtn(_ sender: Any) {
         print("onClicked Go Live Button")
+        self.showPublishView()
     }
     
     @objc func onClickMenuBtn(_ sender: Any) {

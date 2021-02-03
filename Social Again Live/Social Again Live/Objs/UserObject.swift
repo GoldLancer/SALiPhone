@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FirebaseDatabase
+import Firebase
 
 struct UserConstant {
     
@@ -59,6 +59,9 @@ struct UserConstant {
     static let POSTS            = "posts"
     static let BLASTERS         = "blasters"
     static let TRANSACTIONS     = "transactions"
+    
+    static let CLICKABLE_IMAGE_URL = "clickableImgURL"
+    static let CLICKABLE_URL    = "clickableURL"
 }
 
 class UserObject: BaseUserObject {
@@ -83,6 +86,9 @@ class UserObject: BaseUserObject {
     var streamID: String    = ""
     var coin: Int           = 10
     var earned: Double      = 0
+    
+    var clickableImgURL: String = "";
+    var clickableURL: String    = "";
 
     var isBlaster: Bool     = false
     var isRadio: Bool       = false
@@ -147,19 +153,18 @@ class UserObject: BaseUserObject {
                                     UserConstant.BOUGTH_TIME    : self.boughtTimes,
                                     UserConstant.BLASTER_COUNT  : self.blasterCount,
                                     UserConstant.BLASTER_MONTH  : self.blasterMonth,
-                                    UserConstant.IS_VERIFIED    : self.isVerified
+                                    UserConstant.IS_VERIFIED    : self.isVerified,
+                                    
+                                    UserConstant.CLICKABLE_IMAGE_URL : self.clickableImgURL,
+                                    UserConstant.CLICKABLE_URL  : self.clickableURL
+                                    
                                     ])
         
     }
     
     override func initUserWithJsonresponse(value: NSDictionary) {
         
-        self.id         = value[UserConstant.ID]        as? String ?? ""
-        self.name       = value[UserConstant.NAME]      as? String ?? ""
-        self.country    = value[UserConstant.COUNTRY]   as? String ?? ""
-        self.gender     = value[UserConstant.GENDER]    as? String ?? ""
-        self.email      = value[UserConstant.EMAIL]     as? String ?? ""
-        self.phone      = value[UserConstant.PHONE]     as? String ?? ""
+        super.initUserWithJsonresponse(value: value)
         
         self.token      = value[UserConstant.TOKEN]     as? String ?? ""
         self.avatar     = value[UserConstant.AVATAR]    as? String ?? ""
@@ -173,6 +178,9 @@ class UserObject: BaseUserObject {
         self.cover      = value[UserConstant.COVER]     as? String ?? ""
         self.anyUrl     = value[UserConstant.ANYURL]    as? String ?? ""
         self.streamID   = value[UserConstant.STREAMID]  as? String ?? ""
+        
+        self.clickableURL    = value[UserConstant.CLICKABLE_URL]        as? String ?? ""
+        self.clickableImgURL = value[UserConstant.CLICKABLE_IMAGE_URL]  as? String ?? ""
         
         self.isUpgraded = value[UserConstant.IS_UPGRADED]   as? Bool ?? false
         self.isBlaster  = value[UserConstant.IS_BLASTER]    as? Bool ?? false
@@ -195,7 +203,72 @@ class UserObject: BaseUserObject {
         self.boughtTimes    = value[UserConstant.BOUGTH_TIME]     as? UInt64 ?? 0
         self.upgraded_time  = value[UserConstant.UPGRADED_TIME]   as? UInt64 ?? 0
         
-        let type = value[UserConstant.TYPE] as? String ?? ""
-        self.accountType    = AccountType.init(rawValue: type) ?? .GMAIL
+        self.followers.removeAll()
+        if let dicValue = value[UserConstant.FOLLOWERS] as? NSDictionary {
+            for value in dicValue.allValues {
+                if let data = value as? NSDictionary {
+                    let userObj = BaseUserObject()
+                    userObj.initUserWithJsonresponse(value: data)
+                    
+                    self.followers.append(userObj)
+                }
+            }
+        }
+        self.followings.removeAll()
+        if let dicValue = value[UserConstant.FOLLOWINGS] as? NSDictionary {
+            for value in dicValue.allValues {
+                if let data = value as? NSDictionary {
+                    let userObj = BaseUserObject()
+                    userObj.initUserWithJsonresponse(value: data)
+                    
+                    self.followings.append(userObj)
+                }
+            }
+        }
+        self.likes.removeAll()
+        if let dicValue = value[UserConstant.LIKES] as? NSDictionary {
+            for value in dicValue.allValues {
+                if let data = value as? NSDictionary {
+                    let userObj = BaseUserObject()
+                    userObj.initUserWithJsonresponse(value: data)
+                    
+                    self.likes.append(userObj)
+                }
+            }
+        }
+        self.posts.removeAll()
+        if let dicValue = value[UserConstant.POSTS] as? NSDictionary {
+            for value in dicValue.allValues {
+                if let data = value as? NSDictionary {
+                    let postObj = BaseFeedObject()
+                    postObj.initObjectWithJsonresponse(value: data)
+                    
+                    self.posts.append(postObj)
+                }
+            }
+        }
+    }
+    
+    func copyBaseUserObject() -> BaseUserObject {
+        let userObj = BaseUserObject()
+        userObj.id          = self.id
+        userObj.accountType = self.accountType
+        userObj.country     = self.country
+        userObj.email       = self.email
+        userObj.gender      = self.gender
+        userObj.name        = self.name
+        userObj.phone       = self.phone
+        
+        return userObj
+    }
+    
+    func copyBaseValues(_ baseObj: BaseUserObject) {
+        self.id             = baseObj.id
+        self.accountType    = baseObj.accountType
+        self.country        = baseObj.country
+        self.email          = baseObj.email
+        self.gender         = baseObj.gender
+        self.name           = baseObj.name
+        self.phone          = baseObj.phone
     }
 }

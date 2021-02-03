@@ -11,7 +11,7 @@ protocol MyStreamViewControllerDelegate {
     
 }
 
-class MyStreamViewController: UIViewController {
+class MyStreamViewController: BaseViewController {
     
     @IBOutlet weak var profileImg: ProfileGreenImageView!
     @IBOutlet weak var streamCV: UICollectionView!
@@ -119,6 +119,13 @@ extension MyStreamViewController: UICollectionViewDelegateFlowLayout {
 // MARK: CollectionViewCell Delegation
 extension MyStreamViewController: StreamCollectionViewCellDelegate {
     func onClickedOwnerProfile(_ index: Int) {
+        let streamObj = Global.mySteamersObjs[index]
+        self.showUserProfileView(streamObj.owner.id)
+    }
+    
+    func selectedStreaming(_ index: Int) {
+        let streamObj = Global.filterStreamObjs[index]
         
+        self.showLiveSteamView(streamObj)
     }
 }

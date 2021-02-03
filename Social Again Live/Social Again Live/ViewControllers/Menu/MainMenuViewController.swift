@@ -31,6 +31,11 @@ class MainMenuViewController: BaseNavViewController{
     @IBOutlet weak var feedContainer: UIView!
     @IBOutlet weak var streamContainer: UIView!
     
+    @IBOutlet weak var addPostBtn: UIButton!
+    
+    @IBOutlet weak var toastView: UIView!
+    @IBOutlet weak var toastLbl: UILabel!
+    
     let CATEGORY_VIEW_TAG               = 101
     let PULSE_VIEW_TAG                  = 102
     let FEED_VIEW_TAG                   = 103
@@ -42,9 +47,6 @@ class MainMenuViewController: BaseNavViewController{
     var pulseTimer: Timer?              = nil
     var pulseIndex: Int                 = 0
     
-    let feedRef = Database.database().reference().child(POST_DB_NAME)
-    let userRef = Database.database().reference().child(USER_DB_NAME)
-    let streamRef = Database.database().reference().child(VIDEO_DB_NAME)
     let countryRef = Database.database().reference().child(COUNTRY_DB_NAME)
     let monthlyRef = Database.database().reference().child(MONTHLY_POT_DB_NAME)
     
@@ -55,11 +57,16 @@ class MainMenuViewController: BaseNavViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.getMyStreamingObject()
+        self.uploadDeviceToken()
+        
         if let sideMenuVC = SideMenuManager.default.leftMenuNavigationController!.viewControllers.first as? SideMenuViewController {
             sideMenuVC.delegate = self
         }
         
         searchView.setCornerRadius()
+        
+        print("Main Account : \(Global.mCurrentUser!.id), \(Global.mCurrentUser!.name), \(Global.mCurrentUser!.email)")
         
         // MARK: Init Category CollectionView
         let bundle = Bundle(for: type(of: self))
@@ -82,6 +89,9 @@ class MainMenuViewController: BaseNavViewController{
         
         showDashboardView()
         startPulseTimer()
+        
+        // MARK: Add Notification
+        NotificationCenter.default.addObserver(self, selector: #selector(didClosedBroadcasting), name: .didClosedBroadcasting, object:nil)
     }
     
     deinit {
@@ -89,8 +99,24 @@ class MainMenuViewController: BaseNavViewController{
         removeFirebaseObserves()
     }
     
-    func initContainerViews() {
+    @objc func didClosedBroadcasting() {
+        self.showToastView("The Broadcasting was Stopped!")
+    }
+    
+    @objc func reloadCurrentUserInfo() {
+        // Update Coin amount
+        self.coinLbl.text = "\(Global.mCurrentUser!.coin)"
         
+    }
+    
+    func uploadDeviceToken() {
+        if Global.deviceToken == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.uploadDeviceToken()
+            }
+        } else {
+            Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.TOKEN).setValue(Global.deviceToken)
+        }
     }
     
     func hideAllContainerView() {
@@ -113,12 +139,14 @@ class MainMenuViewController: BaseNavViewController{
         self.filterSection.isHidden = true
         self.filterSectionHeightLayout.constant = 0.0
         self.profileContainer.isHidden = false
+        self.addPostBtn.isHidden = false
     }
     
     func showDashboardView() {
         hideAllContainerView()
         
         self.streamContainer.isHidden = false
+        self.addPostBtn.isHidden = true
     }
     
     func showNewsFeedView() {
@@ -128,6 +156,7 @@ class MainMenuViewController: BaseNavViewController{
         self.filterSectionHeightLayout.constant = 0.0
         self.newsFeedBtn.isHidden = true
         self.feedContainer.isHidden = false
+        self.addPostBtn.isHidden = false
     }
     
     func showMyStreamerView() {
@@ -138,19 +167,85 @@ class MainMenuViewController: BaseNavViewController{
         self.filterSection.isHidden = true
         self.pulseSection.isHidden = true
         self.myStreamerContainer.isHidden = false
+        self.addPostBtn.isHidden = true
+    }
+    
+    func showBusinessView() {
+        self.performSegue(withIdentifier: "Main2Business", sender: nil)
+    }
+    
+    private func showToastView(_ msg: String) {
+        self.toastLbl.text = msg
+        
+        self.toastView.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+            self.toastView.isHidden = true
+        }
+    }
+    
+    private func getMyStreamingObject() {
+        
+        Global.mCurrentStream = StreamObject()
+        
+        let streamID = Global.mCurrentUser!.streamID
+        if streamID.isEmpty {
+            createMyStreamObject()
+        } else {
+            Global.videoRef.child(streamID).observeSingleEvent(of: .value) { (snapshot) in
+                if snapshot.exists() {
+                    if let data = snapshot.value as? NSDictionary {
+                        Global.mCurrentStream!.initUserWithJsonresponse(value: data)
+                    }
+                } else {
+                    self.createMyStreamObject()
+                }
+            }
+        }
+    }
+    
+    private func createMyStreamObject() {
+        
+        Global.mCurrentStream!.owner = Global.mCurrentUser!.copyBaseUserObject()
+        Global.mCurrentStream!.country = Global.mCurrentUser!.country
+        
+        Global.createStreamChannel { (value, error) in
+            
+            if error == nil {
+                guard let data = value as? NSDictionary else {
+                    print("Failed JSON encording")
+                    self.present(Global.alertWithText(errorText: "Unknown Error occured!"), animated: true, completion: nil)
+                    return
+                }
+                
+                print(data)
+                if let streamId = data["streamId"] as? String {
+                    Global.mCurrentStream!.streamId = streamId
+                    Global.mCurrentUser!.streamID = streamId
+                    
+                    Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.STREAMID).setValue(streamId)
+                    Global.mCurrentStream!.uploadObjectToFirebase()
+                } else {
+                    self.present(Global.alertWithText(errorText: "Can't parse JSON data!"), animated: true, completion: nil)
+                }
+                
+            } else {
+                self.present(Global.alertWithText(errorText: error?.localizedDescription), animated: true, completion: nil)
+            }
+        }
     }
     
     // MARK: ADD Firebase Observers
     func addFirebaseObserves() {
+        
         // Firebase Observe For All Feeds
-        feedRef.observe(.value) { (snapshot) in
+        Global.postRef.observe(.value) { (snapshot) in
             Global.allPostObjs.removeAll()
             
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
                 if let data = snap.value as? NSDictionary {
                     let postObj = FeedObject()
-                    postObj.initUserWithJsonresponse(value: data)
+                    postObj.initObjectWithJsonresponse(value: data)
                     
                     Global.allPostObjs.append(postObj)
                 }
@@ -160,7 +255,7 @@ class MainMenuViewController: BaseNavViewController{
         }
         
         // Firebase Observe For All Live Streamings
-        streamRef.observe(.value) { (snapshot) in
+        Global.videoRef.observe(.value) { (snapshot) in
             Global.allStreamObj.removeAll()
             
             for child in snapshot.children {
@@ -179,16 +274,18 @@ class MainMenuViewController: BaseNavViewController{
         
         // Firebase Observe For All Countries
         countryRef.observe(.value) { (snapshot) in
-            Global.countries.removeAll()
+            Global.countryObjs.removeAll()
             
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
                 if let data = snap.value as? NSDictionary {
-                    let countryName = data["name"] as? String ?? ""
+                    let cObj = CountryObject()
+                    cObj.initCountryWithJsonresponse(value: data)
                     
-                    Global.countries.append(countryName)
+                    Global.countryObjs.append(cObj)
                 }
             }
+            Global.countryObjs.sort(by: { $0.name < $1.name })
         }
         
         // Firebase Observe For Monthly Pot
@@ -199,7 +296,7 @@ class MainMenuViewController: BaseNavViewController{
         }
         
         // Firebase Observe For Likes Me
-        userRef.child(Global.mCurrentUser!.id).child(UserConstant.LIKES).observe(.value) { (snapshot) in
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.LIKES).observe(.value) { (snapshot) in
             if snapshot.exists() {
                 Global.likeCount = Int(snapshot.childrenCount)
             } else {
@@ -207,8 +304,14 @@ class MainMenuViewController: BaseNavViewController{
             }
         }
         
+        // Firebase Observe For My Coins
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.COIN).observe(.value) { (snapshot) in
+            Global.mCurrentUser!.coin = snapshot.value as? Int ?? 0
+            self.reloadCurrentUserInfo()
+        }
+        
         // Firebase Observe For Following Users
-        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWINGS).observe(.value) { (snapshot) in
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWINGS).observe(.value) { (snapshot) in
             Global.mCurrentUser!.followings.removeAll()
             Global.followingObjs.removeAll()
             
@@ -223,11 +326,12 @@ class MainMenuViewController: BaseNavViewController{
                 }
             }
             
+            self.loadAvailableFeeds()
             NotificationCenter.default.post(name: .didReloadFollowings, object: nil)
         }
         
         // Firebase Observe For Following Users
-        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWERS).observe(.value) { (snapshot) in
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWERS).observe(.value) { (snapshot) in
             Global.mCurrentUser!.followers.removeAll()
             Global.followerObjs.removeAll()
             
@@ -243,19 +347,40 @@ class MainMenuViewController: BaseNavViewController{
             }
             
             self.reloadMyStreamers()
+            self.loadAvailableFeeds()
             NotificationCenter.default.post(name: .didReloadFollowers, object: nil)
+        }
+        
+        // Firebase Observer For ChatRooms
+        Global.chatRef.observe(.value) { (snapshot) in
+            Global.chatObjs.removeAll()
+            
+            for child in snapshot.children {
+                let snap = child as! DataSnapshot
+                if let data = snap.value as? NSDictionary {
+                    let crObj = ChatObject()
+                    crObj.initChatObjWithJsonresponse(value: data)
+                    
+                    if crObj.chatId.contains(Global.mCurrentUser!.id) && !crObj.messages.isEmpty{
+                        Global.chatObjs.append(crObj)
+                    }
+                }
+            }
+            Global.chatObjs.sort(by: { $0.lastMsg.msgTime > $1.lastMsg.msgTime })
+            NotificationCenter.default.post(name: .didReloadChatRooms, object: nil)
         }
     }
     
     func removeFirebaseObserves() {
-        feedRef.removeAllObservers()
-        streamRef.removeAllObservers()
+        Global.postRef.removeAllObservers()
+        Global.videoRef.removeAllObservers()
         countryRef.removeAllObservers()
         monthlyRef.removeAllObservers()
+        Global.chatRef.removeAllObservers()
         
-        userRef.child(Global.mCurrentUser!.id).child(UserConstant.LIKES).removeAllObservers()
-        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWINGS).removeAllObservers()
-        userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWERS).removeAllObservers()
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.LIKES).removeAllObservers()
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWINGS).removeAllObservers()
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.FOLLOWERS).removeAllObservers()
     }
     
     func loadAvailableStreams() {
@@ -348,6 +473,7 @@ class MainMenuViewController: BaseNavViewController{
         Global.pulsePostObjs.removeAll()
 
         for pObj in Global.allPostObjs {
+            
             if isAvaiableFeed(pObj.ownerId) {
                 Global.followPostObjs.append(pObj)
             }
@@ -423,6 +549,39 @@ class MainMenuViewController: BaseNavViewController{
         self.pulseTV.reloadData()
     }
     
+    func showChatListView() {
+        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+        if let chatListView = storyboard.instantiateViewController(withIdentifier: "ChatListView") as? ChatListViewController {
+            
+            chatListView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            chatListView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            
+            self.present(chatListView, animated: true, completion: nil)
+        }
+    }
+    
+    func showFindUserView() {
+        let storyboard = UIStoryboard(name: "FindUser", bundle: nil)
+        if let findUserView = storyboard.instantiateViewController(withIdentifier: "FindUser") as? FindUserViewController {
+            
+            findUserView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            findUserView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            
+            self.present(findUserView, animated: true, completion: nil)
+        }
+    }
+    
+    func showSettingView() {
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        if let settingVC = storyboard.instantiateViewController(withIdentifier: "SettingView") as? SettingViewController {
+            
+            settingVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            settingVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            
+            self.present(settingVC, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -468,10 +627,24 @@ class MainMenuViewController: BaseNavViewController{
     }
     
     @IBAction func onClickMonthPotBtn(_ sender: Any) {
+        self.performSegue(withIdentifier: "Main2Pot", sender: nil)
     }
     
     @IBAction func onClickNewsFeedBtn(_ sender: Any) {
         showNewsFeedView()
+    }
+    
+    @IBAction func onClickAddPostBtn(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "NewPost", bundle: nil)
+        if let postVC = storyboard.instantiateViewController(withIdentifier: "NewPostView") as? NewPostViewController {
+            
+            postVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            postVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            
+            postVC.mPostObj = nil
+            
+            self.present(postVC, animated: true, completion: nil)
+        }
     }
 }
 
@@ -570,31 +743,43 @@ extension MainMenuViewController: SideMenuViewControllerDelegate {
         case "header":
             showDashboardView()
             break
+        case "business":
+            showBusinessView()
+            break
         case "profile":
             showProfileView()
             break
         case "chat":
+            showChatListView()
             break
         case "stream":
             showMyStreamerView()
             break
         case "find":
+            showFindUserView()
             break
         case "transaction":
             break
         case "setting":
+            showSettingView()
             break
         case "exit":
-            do { try Auth.auth().signOut() }
-            catch { print("already logged out") }
+            do {
+                try Auth.auth().signOut()
+            } catch {
+                print("already logged out")
+            }
             
             Global.signoutWithUI()
             break
         case "heart":
+            self.performSegue(withIdentifier: "Main2Rank", sender: nil)
             break
         case "monthpot":
+            self.performSegue(withIdentifier: "Main2Pot", sender: nil)
             break
         case "upgrade":
+            self.showUpgradeView()
             break
             
         default:
@@ -615,11 +800,15 @@ extension MainMenuViewController: CategoryCollectionViewCellDelegate {
 
 extension MainMenuViewController: PulseCollectionViewCellDelegate {
     func onClickFeed(_ feedObj: FeedObject) {
-        
+        if feedObj.type == .IMAGE {
+            self.showPostImageView(feedObj)
+        } else {
+            self.showPostVideoView(feedObj)
+        }
     }
     
     func onClickFeedOwner(_ feedObj: FeedObject) {
-        
+        self.showUserProfileView(feedObj.ownerId)
     }
 }
 
@@ -646,7 +835,9 @@ extension MainMenuViewController: FilterStreamViewControllerDelegate {
 
 // MARK: ContainerView Delegations
 extension MainMenuViewController: AllStreamViewControllerDelegate {
-    
+    func selectUserProfile(_ userId: String) {
+        self.showUserProfileView(userId)
+    }
 }
 
 extension MainMenuViewController: MyStreamViewControllerDelegate {
@@ -654,20 +845,29 @@ extension MainMenuViewController: MyStreamViewControllerDelegate {
 }
 
 extension MainMenuViewController: NewsFeedViewControllerDelegate {
-    
+    func showProfileView(_ userId: String) {
+        self.showUserProfileView(userId)
+    }
 }
 
 extension MainMenuViewController: ProfileViewControllerDelegate {
-    
+    func onClickedEditProfileBtn() {
+        self.performSegue(withIdentifier: "Main2Edit", sender: nil)
+    }
 }
 
 // MARK: Notification Extention
 extension Notification.Name {
-    static let didReloadAllFeeds    = Notification.Name("didReloadAllFeeds")
-    static let didReloadAllSteams   = Notification.Name("didReloadAllSteams")
-    static let didReloadFollowings  = Notification.Name("didReloadFollowings")
-    static let didReloadFollowers   = Notification.Name("didReloadFollowers")
-    static let didReloadMyStreamers   = Notification.Name("didReloadMyStreamers")
+    static let didReloadAllFeeds        = Notification.Name("didReloadAllFeeds")
+    static let didReloadAllSteams       = Notification.Name("didReloadAllSteams")
+    static let didReloadFollowings      = Notification.Name("didReloadFollowings")
+    static let didReloadFollowers       = Notification.Name("didReloadFollowers")
+    static let didReloadChatRooms       = Notification.Name("didReloadChatRooms")
+    static let didReloadMyStreamers     = Notification.Name("didReloadMyStreamers")
+    
+    static let didReloadUserInfo        = Notification.Name("didReloadUserInfo")
+    
+    static let didClosedBroadcasting    = Notification.Name("didClosedBroadcasting")
     
 }
 
@@ -692,5 +892,18 @@ extension String {
         let boundingBox = self.boundingRect(with: constraintRect, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
 
         return ceil(boundingBox.height)
+    }
+}
+
+extension Int {
+    func getNumberFormatString() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        if let numberStr = numberFormatter.string(from: NSNumber(value:self)) {
+            return numberStr
+        } else {
+            return "0"
+        }
     }
 }

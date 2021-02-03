@@ -116,7 +116,7 @@ class FilterStreamViewController: UIViewController {
 // MARK: CollectionView Delegation
 extension FilterStreamViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Global.countries.count
+        return Global.countryObjs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -131,7 +131,8 @@ extension FilterStreamViewController: UICollectionViewDelegate, UICollectionView
             cell.roundView.backgroundColor = MAIN_WHITE_COLOR
         }
         cell.roundView.setCornerRadius((COUNTRY_CELL_HEIGHT - 10)/2)
-        cell.categoryLbl.text = Global.countries[indexPath.row]
+        let cObj = Global.countryObjs[indexPath.row]
+        cell.categoryLbl.text = cObj.name
         
         return cell
     }
@@ -140,7 +141,8 @@ extension FilterStreamViewController: UICollectionViewDelegate, UICollectionView
 extension FilterStreamViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let itemName = Global.countries[indexPath.row]
+        let cObj = Global.countryObjs[indexPath.row]
+        let itemName = cObj.name
         let cellWidth = itemName.widthWithConstrainedHeight(COUNTRY_CELL_HEIGHT, font: UIFont(name: "Montserrat-Light", size: 16.0)!) + 30
         return CGSize(width: cellWidth, height: COUNTRY_CELL_HEIGHT)
     }
@@ -148,8 +150,10 @@ extension FilterStreamViewController: UICollectionViewDelegateFlowLayout {
 
 extension FilterStreamViewController: CategoryCollectionViewCellDelegate {
     func onSelectCategory(_ index: Int) {
+        let cObj = Global.countryObjs[index]
+        
         self.selectedCountryIndex = index
-        self.countryKey = Global.countries[index]
+        self.countryKey = cObj.name
         self.reloadCollectionView()
     }
 }

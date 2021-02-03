@@ -54,6 +54,12 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs to access to camera to take photo to use profile and send to friends.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs to access to microphone to play live broadcasting.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs to access to gallery to select photo to use profile and send to friends.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.ttf</string>
@@ -65,6 +71,10 @@
 	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

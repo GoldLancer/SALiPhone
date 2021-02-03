@@ -20,5 +20,10 @@ class RoundLabel: UILabel {
         super.init(coder: aDecoder)
         self.layer.cornerRadius = self.bounds.height / 2
     }
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        super.drawText(in: rect.inset(by: insets))
+    }
 
 }

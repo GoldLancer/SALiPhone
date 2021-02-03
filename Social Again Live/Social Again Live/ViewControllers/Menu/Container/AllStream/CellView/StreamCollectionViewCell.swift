@@ -9,6 +9,7 @@ import UIKit
 
 protocol StreamCollectionViewCellDelegate {
     func onClickedOwnerProfile(_ index: Int)
+    func selectedStreaming(_ index: Int)
 }
 
 class StreamCollectionViewCell: UICollectionViewCell {
@@ -31,5 +32,9 @@ class StreamCollectionViewCell: UICollectionViewCell {
 
     @IBAction func onClickOwnerProfileBtn(_ sender: Any) {
         self.delegate?.onClickedOwnerProfile(self.streamIndex)
+    }
+    
+    @IBAction func onClickCell(_ sender: Any) {
+        self.delegate?.selectedStreaming(self.streamIndex)
     }
 }

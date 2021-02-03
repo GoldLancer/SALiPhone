@@ -67,6 +67,12 @@
                                     <constraint firstItem="U0g-Sh-4Af" firstAttribute="leading" secondItem="gfS-Pd-MSH" secondAttribute="leading" id="yXL-pS-WwJ"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utK-nU-hhg">
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                <connections>
+                                    <action selector="onClickRootView:" destination="gTV-IL-0wX" eventType="touchUpInside" id="l51-Qc-uVf"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ja-Vl-Ip6">
                                 <rect key="frame" x="10" y="82" width="28" height="28"/>
                                 <subviews>
@@ -94,12 +100,6 @@
                                     <constraint firstAttribute="trailing" secondItem="p55-OE-jUN" secondAttribute="trailing" id="pkb-gK-aNC"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utK-nU-hhg">
-                                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
-                                <connections>
-                                    <action selector="onClickRootView:" destination="gTV-IL-0wX" eventType="touchUpInside" id="l51-Qc-uVf"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" name="main_bg_dark_color"/>
                         <constraints>
@@ -139,7 +139,7 @@
     <resources>
         <image name="ic_video_on_post" width="100" height="100"/>
         <namedColor name="main_bg_dark_color">
-            <color red="0.10196078431372549" green="0.10196078431372549" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.10199999809265137" green="0.10199999809265137" blue="0.10199999809265137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

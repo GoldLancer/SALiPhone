@@ -31,11 +31,29 @@ class SideMenuViewController: UIViewController {
         self.coinLbl.text = "\(Global.mCurrentUser!.coin)"
         self.heartCountLbl.text = "\(Global.likeCount)"
         self.monthPotLbl.text = "\(Global.monthlyPot)"
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCurrentUserInfo), name: .didReloadUserInfo, object:nil)
     }
     
     func onClickMenuItem(_ item: String) {
         self.dismiss(animated: true, completion: nil)
         self.delegate?.onClickMenuItem(item)
+    }
+    
+    @objc func reloadCurrentUserInfo() {
+        // Update Coin amount
+        self.coinLbl.text = "\(Global.mCurrentUser!.coin)"
+        let avatar = Global.mCurrentUser!.avatar
+        if !avatar.isEmpty {
+            self.profileImg.sd_setImage(with: URL(string: avatar), placeholderImage: PROFILE_DEFAULT_GREEN_AVATAR, options: [], completed: nil)
+        } else {
+            self.profileImg.image = PROFILE_DEFAULT_GREEN_AVATAR
+        }
+        
+    }
+    
+    @IBAction func onClickBusinessBtn(_ sender: Any) {
+        onClickMenuItem("business")
     }
     
     @IBAction func onClickProfileBtn(_ sender: Any) {

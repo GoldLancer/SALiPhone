@@ -130,7 +130,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tG7-Ob-Led">
-                                <rect key="frame" x="1000" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="500" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="main_bg" translatesAutoresizingMaskIntoConstraints="NO" id="MDT-iZ-qge">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -161,7 +161,7 @@
                             <constraint firstAttribute="bottom" secondItem="tG7-Ob-Led" secondAttribute="bottom" id="J3h-1p-FZW"/>
                             <constraint firstAttribute="bottom" secondItem="nfg-hN-BDb" secondAttribute="bottom" id="Q0T-eT-n5c"/>
                             <constraint firstItem="nfg-hN-BDb" firstAttribute="leading" secondItem="Kaj-nG-MRl" secondAttribute="leading" id="koh-aX-YF0"/>
-                            <constraint firstItem="tG7-Ob-Led" firstAttribute="leading" secondItem="Kaj-nG-MRl" secondAttribute="leading" constant="1000" id="lYJ-hY-Wuz"/>
+                            <constraint firstItem="tG7-Ob-Led" firstAttribute="leading" secondItem="Kaj-nG-MRl" secondAttribute="leading" constant="500" id="lYJ-hY-Wuz"/>
                             <constraint firstItem="tG7-Ob-Led" firstAttribute="width" secondItem="S4d-Up-wst" secondAttribute="width" id="oO8-OW-j3m"/>
                             <constraint firstItem="Kaj-nG-MRl" firstAttribute="trailing" secondItem="nfg-hN-BDb" secondAttribute="trailing" id="uIT-KB-LOK"/>
                             <constraint firstItem="tG7-Ob-Led" firstAttribute="top" secondItem="S4d-Up-wst" secondAttribute="top" id="xvK-pH-3c1"/>
@@ -388,13 +388,13 @@
             <color red="0.10196078431372549" green="0.10196078431372549" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main_green_color">
-            <color red="0.48627450980392156" green="0.75294117647058822" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.48600000143051147" green="0.75300002098083496" blue="0.27099999785423279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="main_white_color">
-            <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9570000171661377" green="0.9570000171661377" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="social_btn_text_color">
-            <color red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23100000619888306" green="0.34900000691413879" blue="0.59600001573562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
