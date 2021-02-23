@@ -45,7 +45,8 @@ class TuCoinsViewController: UIViewController {
 }
 
 extension TuCoinsViewController: TuCoinCollectionViewCellDelegate {
-    func selectedTUCoins(_ coins: Int) {
+    func selectedTUCoins(_ index: Int) {
+        let coins = TUCOIN_ITEMS[index]
         self.delegate?.selectedTuCoin(coins)
         self.dismiss(animated: true, completion: nil)
     }
@@ -61,7 +62,7 @@ extension TuCoinsViewController: UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TuCoinCollectionViewCell", for: indexPath) as! TuCoinCollectionViewCell
         cell.delegate = self
         
-        cell.coins = TUCOIN_ITEMS[indexPath.row]
+        cell.cellIndex = indexPath.row
         cell.coinLbl.text = "\(TUCOIN_ITEMS[indexPath.row]) TU-Coins"
         
         return cell

@@ -38,7 +38,6 @@
 		961DE19C258061F000A22CAF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DE19B258061F000A22CAF /* BaseViewController.swift */; };
 		961DE1A12580621500A22CAF /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DE1A02580621500A22CAF /* SigninViewController.swift */; };
 		961DE1AA258068AF00A22CAF /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DE1A9258068AF00A22CAF /* RoundButton.swift */; };
-		961DE1E22580A48D00A22CAF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 961DE1E12580A48C00A22CAF /* GoogleService-Info.plist */; };
 		961DE2112580A98B00A22CAF /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DE2102580A98B00A22CAF /* Constant.swift */; };
 		961DE2162580A99A00A22CAF /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961DE2152580A99A00A22CAF /* Global.swift */; };
 		961DE2242580A9C100A22CAF /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961DE21E2580A9C100A22CAF /* Montserrat-Bold.ttf */; };
@@ -86,6 +85,11 @@
 		964CF7E725C9CE3700CD34F7 /* receive_msg.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 964CF7E125C9CE3400CD34F7 /* receive_msg.mp3 */; };
 		964CF7E825C9CE3700CD34F7 /* send_msg.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 964CF7E225C9CE3500CD34F7 /* send_msg.mp3 */; };
 		964CF7E925C9CE3700CD34F7 /* coin_animal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 964CF7E325C9CE3700CD34F7 /* coin_animal.mp3 */; };
+		9655F31225CDD5FB00989638 /* TransactionableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9655F31025CDD5FB00989638 /* TransactionableViewCell.swift */; };
+		9655F31325CDD5FB00989638 /* TransactionableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9655F31125CDD5FB00989638 /* TransactionableViewCell.xib */; };
+		9655F31825CDD7ED00989638 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9655F31725CDD7ED00989638 /* TransactionsViewController.swift */; };
+		9655F32325CFCF1100989638 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9655F32225CFCF1100989638 /* GoogleService-Info.plist */; };
+		9655F45525D3F37F00989638 /* RedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9655F45425D3F37F00989638 /* RedeemViewController.swift */; };
 		9657F36D25B75BE70076C168 /* MsgPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657F36C25B75BE70076C168 /* MsgPhotoViewController.swift */; };
 		9657F37225B769F90076C168 /* SearchContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9657F37125B769F90076C168 /* SearchContactViewController.swift */; };
 		9657F37825B797210076C168 /* FindUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9657F37725B797210076C168 /* FindUser.storyboard */; };
@@ -167,6 +171,10 @@
 		968D402F25B18C3000A73D39 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968D402D25B18C3000A73D39 /* MessageTableViewCell.swift */; };
 		968D403025B18C3000A73D39 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968D402E25B18C3000A73D39 /* MessageTableViewCell.xib */; };
 		968D403625B1A6E600A73D39 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968D403525B1A6E600A73D39 /* Extension+Date.swift */; };
+		96DA8B0925E4C25A003B7212 /* terms.html in Resources */ = {isa = PBXBuildFile; fileRef = 96DA8B0825E4C25A003B7212 /* terms.html */; };
+		96DA8B0E25E4C27F003B7212 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DA8B0D25E4C27F003B7212 /* TermsViewController.swift */; };
+		96DA8B1325E4CC32003B7212 /* TuCoinPayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DA8B1225E4CC32003B7212 /* TuCoinPayoutViewController.swift */; };
+		96DA8B1825E58E96003B7212 /* RequestObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DA8B1725E58E96003B7212 /* RequestObject.swift */; };
 		9BB1D6DC9A60430E77521167 /* Pods_Social_Again_Live_WebRTCiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7134EE10C50AE7EBF39D34C0 /* Pods_Social_Again_Live_WebRTCiOSSDK.framework */; };
 		BE1622A7BB60D11C9EA0B86A /* Pods_Social_Again_LiveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2AFB806EE98A7BB5DEC1C22 /* Pods_Social_Again_LiveTests.framework */; };
 		E6E55DA00CBE8C8E1CEE0861 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
@@ -253,7 +261,6 @@
 		961DE19B258061F000A22CAF /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		961DE1A02580621500A22CAF /* SigninViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninViewController.swift; sourceTree = "<group>"; };
 		961DE1A9258068AF00A22CAF /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
-		961DE1E12580A48C00A22CAF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		961DE2102580A98B00A22CAF /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		961DE2152580A99A00A22CAF /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		961DE21E2580A9C100A22CAF /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -302,6 +309,11 @@
 		964CF7E125C9CE3400CD34F7 /* receive_msg.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = receive_msg.mp3; sourceTree = "<group>"; };
 		964CF7E225C9CE3500CD34F7 /* send_msg.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = send_msg.mp3; sourceTree = "<group>"; };
 		964CF7E325C9CE3700CD34F7 /* coin_animal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = coin_animal.mp3; sourceTree = "<group>"; };
+		9655F31025CDD5FB00989638 /* TransactionableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionableViewCell.swift; sourceTree = "<group>"; };
+		9655F31125CDD5FB00989638 /* TransactionableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionableViewCell.xib; sourceTree = "<group>"; };
+		9655F31725CDD7ED00989638 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
+		9655F32225CFCF1100989638 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9655F45425D3F37F00989638 /* RedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemViewController.swift; sourceTree = "<group>"; };
 		9657F36C25B75BE70076C168 /* MsgPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgPhotoViewController.swift; sourceTree = "<group>"; };
 		9657F37125B769F90076C168 /* SearchContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactViewController.swift; sourceTree = "<group>"; };
 		9657F37725B797210076C168 /* FindUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FindUser.storyboard; sourceTree = "<group>"; };
@@ -383,6 +395,10 @@
 		968D402D25B18C3000A73D39 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		968D402E25B18C3000A73D39 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		968D403525B1A6E600A73D39 /* Extension+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		96DA8B0825E4C25A003B7212 /* terms.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = terms.html; sourceTree = "<group>"; };
+		96DA8B0D25E4C27F003B7212 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
+		96DA8B1225E4CC32003B7212 /* TuCoinPayoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuCoinPayoutViewController.swift; sourceTree = "<group>"; };
+		96DA8B1725E58E96003B7212 /* RequestObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestObject.swift; sourceTree = "<group>"; };
 		9A3CC197559B19D766BB7CD6 /* Pods-Social Again Live-Social Again LiveUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Social Again Live-Social Again LiveUITests.debug.xcconfig"; path = "Target Support Files/Pods-Social Again Live-Social Again LiveUITests/Pods-Social Again Live-Social Again LiveUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B547C5B889D2E9D332563FB9 /* Pods_Social_Again_Live.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Again_Live.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC18CF437B8A897F39FBE63C /* Pods_Social_Again_Live_Social_Again_LiveUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Social_Again_Live_Social_Again_LiveUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -470,6 +486,8 @@
 		9619E8FB25838D4900DA9652 /* Container */ = {
 			isa = PBXGroup;
 			children = (
+				9655F45325D3F36B00989638 /* Redeem */,
+				9655F30E25CDD5D500989638 /* Transactions */,
 				9657F5A425C17B440076C168 /* Upgrade */,
 				9657F47425BB838D0076C168 /* MonthlyPot */,
 				9657F46325BB5D5E0076C168 /* Ranking */,
@@ -542,7 +560,7 @@
 				961DE1462580534000A22CAF /* Assets.xcassets */,
 				961DE1482580534000A22CAF /* LaunchScreen.storyboard */,
 				961DE14B2580534000A22CAF /* Info.plist */,
-				961DE1E12580A48C00A22CAF /* GoogleService-Info.plist */,
+				9655F32225CFCF1100989638 /* GoogleService-Info.plist */,
 			);
 			path = "Social Again Live";
 			sourceTree = "<group>";
@@ -664,6 +682,7 @@
 				9662DA6F258A726200397F5C /* FeedCommentObject.swift */,
 				968D401725B0EB0B00A73D39 /* MsgObj.swift */,
 				9657F7FB25C4F4B70076C168 /* PartnerObject.swift */,
+				96DA8B1725E58E96003B7212 /* RequestObject.swift */,
 			);
 			path = Objs;
 			sourceTree = "<group>";
@@ -764,6 +783,32 @@
 			path = CellView;
 			sourceTree = "<group>";
 		};
+		9655F30E25CDD5D500989638 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				9655F30F25CDD5DE00989638 /* CellView */,
+				9655F31725CDD7ED00989638 /* TransactionsViewController.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		9655F30F25CDD5DE00989638 /* CellView */ = {
+			isa = PBXGroup;
+			children = (
+				9655F31025CDD5FB00989638 /* TransactionableViewCell.swift */,
+				9655F31125CDD5FB00989638 /* TransactionableViewCell.xib */,
+			);
+			path = CellView;
+			sourceTree = "<group>";
+		};
+		9655F45325D3F36B00989638 /* Redeem */ = {
+			isa = PBXGroup;
+			children = (
+				9655F45425D3F37F00989638 /* RedeemViewController.swift */,
+			);
+			path = Redeem;
+			sourceTree = "<group>";
+		};
 		9657F37625B7970A0076C168 /* FindUser */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,6 +846,8 @@
 				9657F3A725B9E5100076C168 /* AboutUsViewController.swift */,
 				9657F3A925B9E51C0076C168 /* PrivacyViewController.swift */,
 				9657F42925B9FEE90076C168 /* FAQViewController.swift */,
+				96DA8B0D25E4C27F003B7212 /* TermsViewController.swift */,
+				96DA8B1225E4CC32003B7212 /* TuCoinPayoutViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -808,6 +855,7 @@
 		9657F41825B9F68C0076C168 /* Html */ = {
 			isa = PBXGroup;
 			children = (
+				96DA8B0825E4C25A003B7212 /* terms.html */,
 				9657F42425B9FE240076C168 /* about_of_sal_files */,
 				9657F41C25B9F6C00076C168 /* about.html */,
 				9657F41A25B9F6BD0076C168 /* faq.htm */,
@@ -1250,11 +1298,13 @@
 				9657F47F25BB869F0076C168 /* Post.storyboard in Resources */,
 				964CF7E925C9CE3700CD34F7 /* coin_animal.mp3 in Resources */,
 				9657F42525B9FE240076C168 /* about_of_sal_files in Resources */,
+				96DA8B0925E4C25A003B7212 /* terms.html in Resources */,
 				9632759B25863310008796F4 /* MyFeedCollectionViewCell.xib in Resources */,
 				9657F37825B797210076C168 /* FindUser.storyboard in Resources */,
 				9662DAA2258B447500397F5C /* LikeProfileCollectionViewCell.xib in Resources */,
 				9657F42025B9F6C00076C168 /* about.html in Resources */,
 				964CF7E425C9CE3700CD34F7 /* coin_emoji.mp3 in Resources */,
+				9655F31325CDD5FB00989638 /* TransactionableViewCell.xib in Resources */,
 				961DE2262580A9C100A22CAF /* Montserrat-Medium.ttf in Resources */,
 				9657F47025BB674C0076C168 /* RankingTableViewCell.xib in Resources */,
 				964CF7E725C9CE3700CD34F7 /* receive_msg.mp3 in Resources */,
@@ -1271,13 +1321,13 @@
 				9657F41E25B9F6C00076C168 /* faq.htm in Resources */,
 				961DE2282580A9C100A22CAF /* Montserrat-SemiBold.ttf in Resources */,
 				9657F7BD25C35E6D0076C168 /* LiveCommentTableViewCell.xib in Resources */,
-				961DE1E22580A48D00A22CAF /* GoogleService-Info.plist in Resources */,
 				968D402325B1047C00A73D39 /* Message.storyboard in Resources */,
 				963275EB2589F93D008796F4 /* NewsFeedTableViewCell.xib in Resources */,
 				968D401D25B0F7BF00A73D39 /* UserProfile.storyboard in Resources */,
 				968D403025B18C3000A73D39 /* MessageTableViewCell.xib in Resources */,
 				961DE1452580533E00A22CAF /* Main.storyboard in Resources */,
 				9662DAA8258B69BF00397F5C /* Coin.storyboard in Resources */,
+				9655F32325CFCF1100989638 /* GoogleService-Info.plist in Resources */,
 				9657F5B825C17DCD0076C168 /* InAppCollectionViewCell.xib in Resources */,
 				9657F38325B9B2410076C168 /* Follow.storyboard in Resources */,
 			);
@@ -1491,6 +1541,7 @@
 				960CC84225AE3F26008CDDA1 /* RoundGreenTextField.swift in Sources */,
 				961DE1A12580621500A22CAF /* SigninViewController.swift in Sources */,
 				963275F1258A1CA7008796F4 /* UserProfileViewController.swift in Sources */,
+				96DA8B0E25E4C27F003B7212 /* TermsViewController.swift in Sources */,
 				9619E8D82582A36A00DA9652 /* CategoryCollectionViewCell.swift in Sources */,
 				968D3F1525AF769A00A73D39 /* CategoryViewController.swift in Sources */,
 				9657F39E25B9E4E00076C168 /* SettingViewController.swift in Sources */,
@@ -1501,6 +1552,7 @@
 				9619E8FD25838D8A00DA9652 /* AllStreamViewController.swift in Sources */,
 				9657F3AA25B9E51C0076C168 /* PrivacyViewController.swift in Sources */,
 				9657F59425BD0F620076C168 /* VideoPageCollectionViewCell.swift in Sources */,
+				9655F31825CDD7ED00989638 /* TransactionsViewController.swift in Sources */,
 				9657F42A25B9FEE90076C168 /* FAQViewController.swift in Sources */,
 				960CC83D25AE3CF9008CDDA1 /* EditProfileViewController.swift in Sources */,
 				968D3F3D25AF88D500A73D39 /* GenderViewController.swift in Sources */,
@@ -1541,11 +1593,13 @@
 				9657F3A825B9E5100076C168 /* AboutUsViewController.swift in Sources */,
 				9657F7FC25C4F4B70076C168 /* PartnerObject.swift in Sources */,
 				962D89B3258407B30012949E /* FilterStreamViewController.swift in Sources */,
+				9655F31225CDD5FB00989638 /* TransactionableViewCell.swift in Sources */,
 				9657F36D25B75BE70076C168 /* MsgPhotoViewController.swift in Sources */,
 				962D89B8258431BA0012949E /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				961DE2112580A98B00A22CAF /* Constant.swift in Sources */,
 				968D403625B1A6E600A73D39 /* Extension+Date.swift in Sources */,
 				968D401825B0EB0B00A73D39 /* MsgObj.swift in Sources */,
+				96DA8B1325E4CC32003B7212 /* TuCoinPayoutViewController.swift in Sources */,
 				964CF70325C6609600CD34F7 /* LiveViewController.swift in Sources */,
 				964CF70D25C6BD8300CD34F7 /* BaseBroadcastingViewController.swift in Sources */,
 				9619E8F12582B50600DA9652 /* PulseCollectionViewCell.swift in Sources */,
@@ -1561,9 +1615,11 @@
 				9657F48925BB962A0076C168 /* PostVideoViewController.swift in Sources */,
 				961DE2162580A99A00A22CAF /* Global.swift in Sources */,
 				961DE26D2580B89D00A22CAF /* FeedObject.swift in Sources */,
+				9655F45525D3F37F00989638 /* RedeemViewController.swift in Sources */,
 				9657F3A325B9E5000076C168 /* AppSettingViewController.swift in Sources */,
 				9657F48E25BB96730076C168 /* PostBaseViewController.swift in Sources */,
 				9619E8F725837E3900DA9652 /* CommentObject.swift in Sources */,
+				96DA8B1825E58E96003B7212 /* RequestObject.swift in Sources */,
 				9657F5AB25C17D910076C168 /* UpgradeViewController.swift in Sources */,
 				9657F76A25C25A040076C168 /* PublishViewController.swift in Sources */,
 				9662DA70258A726200397F5C /* FeedCommentObject.swift in Sources */,
@@ -1774,6 +1830,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Social Again Live/Social Again Live.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3GQCJSFJL2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1804,6 +1861,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Social Again Live/Social Again Live.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3GQCJSFJL2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

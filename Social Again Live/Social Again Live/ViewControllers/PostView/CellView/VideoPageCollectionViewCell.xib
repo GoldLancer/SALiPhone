@@ -32,7 +32,7 @@
                                         <rect key="frame" x="193.5" y="225" width="37" height="37"/>
                                         <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </activityIndicatorView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKj-8Q-AMf" customClass="YTPlayerView" customModule="youtube_ios_player_helper_swift">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKj-8Q-AMf" customClass="WKYTPlayerView">
                                         <rect key="frame" x="0.0" y="0.0" width="424" height="487"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -137,7 +137,7 @@
                 <outlet property="playImg" destination="ksi-QF-8dz" id="Ash-oy-UnU"/>
                 <outlet property="profileImg" destination="vqC-2N-mPC" id="TKE-bH-EKN"/>
                 <outlet property="profileLbl" destination="mng-Gu-y3y" id="MQY-Iv-tdF"/>
-                <outlet property="ytplayerView" destination="MKj-8Q-AMf" id="Tpi-gP-gVW"/>
+                <outlet property="ytplayerView" destination="MKj-8Q-AMf" id="CTo-M6-eq0"/>
             </connections>
             <point key="canvasLocation" x="411.59420289855075" y="217.96875"/>
         </collectionViewCell>

@@ -8,6 +8,10 @@
 import UIKit
 import PWSwitch
 
+protocol BusinessProfileViewControllerDelegate {
+    func gotoUpgradeView()
+}
+
 class BusinessProfileViewController: BaseViewController {
 
     @IBOutlet weak var pulseSwitch: PWSwitch!
@@ -16,12 +20,29 @@ class BusinessProfileViewController: BaseViewController {
     @IBOutlet weak var clickableBtn: UIButton!
     @IBOutlet weak var icBlaster: UIImageView!
     
+    var delegate: BusinessProfileViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         addNavItem()
         initUserInfo()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !Global.mCurrentUser!.isUpgraded {
+            self.showAlertWithText(errorText: "You have to upgrade your account to use Business Settings. Do you want to upgarde now?", title: "", cancelTitle: "Not Now", cancelAction: {
+                self.navigationController?.popViewController(animated: true)
+            }, otherButtonTitle: "Yes", otherButtonAction: {
+                self.navigationController?.popViewController(animated: false)
+                self.delegate?.gotoUpgradeView()
+            }, completion: {
+                
+            })
+        }
     }
     
 
@@ -67,9 +88,12 @@ class BusinessProfileViewController: BaseViewController {
     }
 
     @IBAction func onClickClikableBtn(_ sender: Any) {
+        
     }
     
     @IBAction func onChangePulseSwitch(_ sender: Any) {
+        Global.mCurrentUser!.isPulse = self.pulseSwitch.on
+        Global.upgradeMyPosts()
     }
     
     @IBAction func onChangeSponsorSwitch(_ sender: Any) {

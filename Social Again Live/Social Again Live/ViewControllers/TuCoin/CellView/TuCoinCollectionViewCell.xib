@@ -24,16 +24,16 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uyE-Ab-g0m">
-                        <rect key="frame" x="102" y="51" width="120" height="32"/>
+                        <rect key="frame" x="87" y="51" width="150" height="32"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10000 TU-Coins" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoV-W2-kVG">
-                                <rect key="frame" x="0.0" y="0.0" width="120" height="32"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="32"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="13"/>
                                 <color key="textColor" name="main_white_color"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewg-W5-uk3" customClass="RoundButton" customModule="Social_Again_Live" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="120" height="32"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <connections>
                                     <action selector="onClickCell:" destination="gTV-IL-0wX" eventType="touchUpInside" id="7hP-Bp-wR3"/>
@@ -43,7 +43,7 @@
                         <color key="backgroundColor" name="main_green_color"/>
                         <constraints>
                             <constraint firstItem="ewg-W5-uk3" firstAttribute="leading" secondItem="uyE-Ab-g0m" secondAttribute="leading" id="7fB-XD-CVs"/>
-                            <constraint firstAttribute="width" constant="120" id="9Qk-rZ-W6m"/>
+                            <constraint firstAttribute="width" constant="150" id="9Qk-rZ-W6m"/>
                             <constraint firstItem="ewg-W5-uk3" firstAttribute="top" secondItem="uyE-Ab-g0m" secondAttribute="top" id="AiQ-Uq-nxT"/>
                             <constraint firstAttribute="bottom" secondItem="ewg-W5-uk3" secondAttribute="bottom" id="LIs-di-Igt"/>
                             <constraint firstAttribute="trailing" secondItem="UoV-W2-kVG" secondAttribute="trailing" id="WTa-hi-boL"/>
@@ -70,7 +70,7 @@
             <connections>
                 <outlet property="coinLbl" destination="UoV-W2-kVG" id="f4N-P8-nVm"/>
             </connections>
-            <point key="canvasLocation" x="339.13043478260875" y="122.54464285714285"/>
+            <point key="canvasLocation" x="-123" y="82"/>
         </collectionViewCell>
     </objects>
     <resources>

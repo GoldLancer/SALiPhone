@@ -11,6 +11,8 @@ import GoogleSignIn
 import IQKeyboardManagerSwift
 import FBSDKCoreKit
 import AVKit
+import SVProgressHUD
+import SwiftyStoreKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,9 +23,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Keyboard Manager Configuration
         IQKeyboardManager.shared.enable = true
         
+        // SVProgress Configuration
+        SVProgressHUD.setDefaultStyle(.light)
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.setDefaultAnimationType(.flat)
+        SVProgressHUD.setForegroundColor(MAIN_WHITE_COLOR!)
+        SVProgressHUD.setBackgroundColor(UIColor.clear)
+        SVProgressHUD.setRingThickness(4)
+        
         // Firebase Configuration
         FirebaseApp.configure()
         
+        // In-App Store Configuration
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                print("IN-APP: \(purchase)")
+                switch purchase.transaction.transactionState {
+                case .purchased, .restored:
+                    if purchase.needsFinishTransaction {
+                        // Deliver content from server, then:
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                // Unlock content
+                case .failed, .purchasing, .deferred:
+                    break // do nothing
+                @unknown default:
+                    break
+                }
+            }
+        }
+        
+        let appleValidator = AppleReceiptValidator(service: .sandbox, sharedSecret: IAP_SHARED_SECRET)
+        SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
+            
+            Global.hasPurchased = false
+            if case .success(let receipt) = result {
+                let subscibeResult = SwiftyStoreKit.verifyPurchase(productId: IAP_MONTHLY_SUB_ID, inReceipt: receipt)
+                switch subscibeResult {
+                case .purchased(item: _):
+                    Global.hasPurchased = true
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        
+        // Messaging Configuration
         Messaging.messaging().delegate = self
         Messaging.messaging().subscribe(toTopic: "webhook")
         

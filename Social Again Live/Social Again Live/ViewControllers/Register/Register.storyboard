@@ -76,7 +76,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eIc-k5-LSo">
-                                        <rect key="frame" x="50" y="364" width="314" height="168"/>
+                                        <rect key="frame" x="50" y="338" width="314" height="220"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igu-KI-OuW" customClass="RoundButton" customModule="Social_Again_Live" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="314" height="44"/>
@@ -93,7 +93,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xUY-7l-Vuj" customClass="RoundButton" customModule="Social_Again_Live" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="124" width="314" height="44"/>
+                                                <rect key="frame" x="0.0" y="88" width="314" height="44"/>
                                                 <color key="backgroundColor" name="main_white_color"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="LYM-ey-bUJ"/>
@@ -106,13 +106,23 @@
                                                     <action selector="onClickGoogleSigninBtn:" destination="rSG-7z-k8j" eventType="touchUpInside" id="bsT-bA-zM8"/>
                                                 </connections>
                                             </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCp-oh-9Tz">
+                                                <rect key="frame" x="0.0" y="176" width="314" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="OOr-GZ-Cmm"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="xUY-7l-Vuj" secondAttribute="bottom" id="11h-lb-sAi"/>
                                             <constraint firstItem="xUY-7l-Vuj" firstAttribute="leading" secondItem="eIc-k5-LSo" secondAttribute="leading" id="3hy-kk-bBg"/>
                                             <constraint firstAttribute="trailing" secondItem="xUY-7l-Vuj" secondAttribute="trailing" id="5hr-wY-Yz8"/>
-                                            <constraint firstItem="xUY-7l-Vuj" firstAttribute="top" secondItem="Igu-KI-OuW" secondAttribute="bottom" constant="80" id="Xax-8N-mgw"/>
+                                            <constraint firstItem="uCp-oh-9Tz" firstAttribute="top" secondItem="xUY-7l-Vuj" secondAttribute="bottom" constant="44" id="B4a-0q-37f"/>
+                                            <constraint firstAttribute="bottom" secondItem="uCp-oh-9Tz" secondAttribute="bottom" id="SeX-Rd-9mD"/>
+                                            <constraint firstAttribute="trailing" secondItem="uCp-oh-9Tz" secondAttribute="trailing" id="V4l-5d-dnM"/>
+                                            <constraint firstItem="xUY-7l-Vuj" firstAttribute="top" secondItem="Igu-KI-OuW" secondAttribute="bottom" constant="44" id="Xax-8N-mgw"/>
+                                            <constraint firstItem="uCp-oh-9Tz" firstAttribute="leading" secondItem="eIc-k5-LSo" secondAttribute="leading" id="lbK-Rc-1St"/>
                                             <constraint firstItem="Igu-KI-OuW" firstAttribute="leading" secondItem="eIc-k5-LSo" secondAttribute="leading" id="nxg-N4-nmJ"/>
                                             <constraint firstItem="Igu-KI-OuW" firstAttribute="top" secondItem="eIc-k5-LSo" secondAttribute="top" id="sLr-0R-RQD"/>
                                             <constraint firstAttribute="trailing" secondItem="Igu-KI-OuW" secondAttribute="trailing" id="zNq-I6-LCp"/>
@@ -170,6 +180,7 @@
                     <navigationItem key="navigationItem" id="uRc-d0-qF8"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="appleBtnView" destination="uCp-oh-9Tz" id="MIB-gN-tge"/>
                         <outlet property="loginView" destination="nfg-hN-BDb" id="Qqj-mq-GVL"/>
                         <outlet property="splashView" destination="tG7-Ob-Led" id="jPi-0c-BVj"/>
                         <outlet property="splashViewLeadingContrant" destination="lYJ-hY-Wuz" id="Hm6-sM-A0G"/>

@@ -54,9 +54,12 @@ class MainMenuViewController: BaseNavViewController{
     var countryKey: String  = ""
     var genderKey: String   = ""
     
+    var hasLoaded = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.checkingUpgrading()
         self.getMyStreamingObject()
         self.uploadDeviceToken()
         
@@ -107,6 +110,18 @@ class MainMenuViewController: BaseNavViewController{
         // Update Coin amount
         self.coinLbl.text = "\(Global.mCurrentUser!.coin)"
         
+    }
+    
+    
+    override func finishPurchasing(_ result: String) {
+        super.finishPurchasing(result)
+        
+        self.showToastView(result)
+    }
+    
+    func checkingUpgrading() {
+        Global.mCurrentUser!.isUpgraded = Global.hasPurchased
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.IS_UPGRADED).setValue(Global.hasPurchased)
     }
     
     func uploadDeviceToken() {
@@ -170,7 +185,7 @@ class MainMenuViewController: BaseNavViewController{
         self.addPostBtn.isHidden = true
     }
     
-    func showBusinessView() {
+    func showBusinessView() {        
         self.performSegue(withIdentifier: "Main2Business", sender: nil)
     }
     
@@ -487,6 +502,11 @@ class MainMenuViewController: BaseNavViewController{
 
         Global.followPostObjs.sort(by: {$0.postId > $1.postId})
         Global.myPostObjs.sort(by: {$0.postId > $1.postId})
+        
+        if !self.hasLoaded {
+            self.hasLoaded = true
+            Global.upgradeMyPosts()
+        }
 
         NotificationCenter.default.post(name: .didReloadAllFeeds, object: nil)
         reloadMyStreamers()
@@ -616,6 +636,18 @@ class MainMenuViewController: BaseNavViewController{
                 filterVC.delegate = self
             }
         }
+        
+        if segue.identifier == "Main2Business" {
+            if let businessVC = segue.destination as? BusinessProfileViewController {
+                businessVC.delegate = self
+            }
+        }
+        
+        if segue.identifier == "Main2Redeem" {
+            if let redeemVC = segue.destination as? RedeemViewController {
+                redeemVC.delegate = self
+            }
+        }
     }
 
     // MARK: - UI ACTIONS
@@ -624,6 +656,7 @@ class MainMenuViewController: BaseNavViewController{
     }
     
     @IBAction func onClickNotificationBtn(_ sender: Any) {
+        
     }
     
     @IBAction func onClickMonthPotBtn(_ sender: Any) {
@@ -759,6 +792,7 @@ extension MainMenuViewController: SideMenuViewControllerDelegate {
             showFindUserView()
             break
         case "transaction":
+            self.performSegue(withIdentifier: "Main2Trans", sender: nil)
             break
         case "setting":
             showSettingView()
@@ -851,8 +885,24 @@ extension MainMenuViewController: NewsFeedViewControllerDelegate {
 }
 
 extension MainMenuViewController: ProfileViewControllerDelegate {
+    func gotoRedeemVC() {
+        self.performSegue(withIdentifier: "Main2Redeem", sender: nil)
+    }
+    
     func onClickedEditProfileBtn() {
         self.performSegue(withIdentifier: "Main2Edit", sender: nil)
+    }
+}
+
+extension MainMenuViewController: RedeemViewControllerDelegate {
+    func finishedSending() {
+        self.showToastView("Sent your Request")
+    }
+}
+
+extension MainMenuViewController: BusinessProfileViewControllerDelegate {
+    func gotoUpgradeView() {
+        self.showUpgradeView()
     }
 }
 

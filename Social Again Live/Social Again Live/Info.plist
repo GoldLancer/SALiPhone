@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<false/>
 	<key>FacebookAppID</key>
@@ -54,6 +54,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app needs to access to bluetooth to play live broadcasting.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This app needs to access to bluetooth to play live broadcasting.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs to access to camera to take photo to use profile and send to friends.</string>
 	<key>NSMicrophoneUsageDescription</key>
@@ -95,6 +99,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIUserInterfaceStyle</key>
-	<string></string>
+	<string>Light</string>
 </dict>
 </plist>

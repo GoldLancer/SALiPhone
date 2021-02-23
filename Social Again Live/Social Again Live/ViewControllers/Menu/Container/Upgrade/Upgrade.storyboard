@@ -217,16 +217,7 @@
                                                     <fragment>
                                                         <string key="content">Send Out Notifications To Your SAL Followers!
 Pulse Bar Share For Unlimited Traffic!
-</string>
-                                                        <attributes>
-                                                            <color key="NSBackgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <font key="NSFont" size="11" name="Montserrat-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="30" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment>
-                                                        <string key="content">Your Sponsored Ads On Your Broadcast!
+Your Sponsored Ads On Your Broadcast!
 Take Part In The Monthly SAL Cash/TU-Coin Pot!
 We Help Build Your SAL Network!</string>
                                                         <attributes>

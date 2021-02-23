@@ -7,14 +7,14 @@
 
 import UIKit
 import FSPagerView
-import youtube_ios_player_helper_swift
+import YoutubePlayer_in_WKWebView
 
-class VideoPageCollectionViewCell: FSPagerViewCell, YTPlayerViewDelegate {
+class VideoPageCollectionViewCell: FSPagerViewCell, WKYTPlayerViewDelegate {
 
     @IBOutlet weak var profileLbl: UILabel!
     @IBOutlet weak var profileImg: ProfileGreenImageView!
     @IBOutlet weak var playImg: UIImageView!
-    @IBOutlet weak var ytplayerView: YTPlayerView!
+    @IBOutlet weak var ytplayerView: WKYTPlayerView!
     
     let playerVars:[String: Any] = [
         "controls" : "0",
@@ -28,7 +28,9 @@ class VideoPageCollectionViewCell: FSPagerViewCell, YTPlayerViewDelegate {
     ]
     
     var ytId: String? = nil
+    var playerStatus: WKYTPlayerState = .unstarted
     var canStart: Bool = false
+    var cellIndex: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,24 +40,29 @@ class VideoPageCollectionViewCell: FSPagerViewCell, YTPlayerViewDelegate {
         self.ytplayerView.isUserInteractionEnabled = true
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-//        ytplayerView.pauseVideo()
-    }
-    
     func loadVideo(_ ytId: String) {
-        _ = self.ytplayerView.load(videoId: ytId, playerVars: playerVars)
+        canStart = false
+        self.playerStatus = .unstarted
+        _ = self.ytplayerView.load(withVideoId: ytId, playerVars: playerVars)
     }
     
-    func stopVideo() {
+    func deselectedVideo() {
+        if self.playerStatus == .playing || self.playerStatus == .buffering {
+            self.ytplayerView.pauseVideo()
+        }
 //        self.ytplayerView.load
 //        if self.ytplayerView.playerState == .playing {
 //            self.ytplayerView.pauseVideo()
 //        }
     }
     
-    func startVideo() {
+    func selectedVideo() {
+//        if self.cellIndex ==
+        if self.playerStatus == .unstarted {
+//            self.ytplayerView.playVideo()
+        } else if self.playerStatus == .paused {
+            self.ytplayerView.playVideo()
+        }
 //        switch self.ytplayerView.playerState {
 //        case .playing:
 //            break
@@ -73,12 +80,25 @@ class VideoPageCollectionViewCell: FSPagerViewCell, YTPlayerViewDelegate {
 //        }
     }
     
-    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        if canStart {
-            self.ytplayerView.playVideo()
-            canStart = false
-        }
+    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
         self.ytplayerView.isHidden = false
+        
+        self.ytplayerView.playVideo()
+    }
+    
+    func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
+        print("YTPlayerView: \(self.cellIndex) Did Change To \(state.rawValue)")
+        if self.cellIndex != Global.ytVideoIndex {
+            if state == .playing {
+                playerView.pauseVideo()
+            }
+        } else {
+            if state == .paused {
+                playerView.playVideo()
+            }
+        }
+        
+        self.playerStatus = state
     }
 
 }

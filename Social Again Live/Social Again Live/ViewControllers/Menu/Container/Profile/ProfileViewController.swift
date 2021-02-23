@@ -18,6 +18,7 @@ enum PhotoType {
 
 protocol ProfileViewControllerDelegate {
     func onClickedEditProfileBtn()
+    func gotoRedeemVC()
 }
 
 class ProfileViewController: BaseViewController {
@@ -257,9 +258,17 @@ class ProfileViewController: BaseViewController {
     }
     
     @IBAction func onClickRedeemBtn(_ sender: Any) {
+        self.delegate?.gotoRedeemVC()
     }
     
     @IBAction func onClickDetailRedeemBtn(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        if let payoutVC = storyboard.instantiateViewController(withIdentifier: "PayoutDoc") as? TuCoinPayoutViewController {
+            
+            payoutVC.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            payoutVC.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            self.present(payoutVC, animated: true, completion: nil)
+        }
     }
     
     @IBAction func onClickFollowersBtn(_ sender: Any) {

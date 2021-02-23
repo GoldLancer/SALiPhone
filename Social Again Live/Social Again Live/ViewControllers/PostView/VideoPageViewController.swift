@@ -6,16 +6,17 @@
 //
 
 import UIKit
+import FSPagerView
 
 class VideoPageViewController: UIViewController {
 
     @IBOutlet weak var container: UIView!
     
 //    @IBOutlet weak var pagerView: FSPagerView!
-    @IBOutlet weak var collectionView: UICollectionView!
+//    @IBOutlet weak var collectionView: UICollectionView!
     var currentIndex: Int = 0
     var videos:[FeedObject] = []
-//    let pagerView = FSPagerView()
+    let pagerView = FSPagerView()
     
     let playerVars:[String: Any] = [
         "controls" : "0",
@@ -38,21 +39,21 @@ class VideoPageViewController: UIViewController {
         }
 
         self.view.layoutIfNeeded()
-//        pagerView.frame = container.bounds
-//        self.container.addSubview(pagerView)
+        pagerView.frame = container.bounds
+        self.container.addSubview(pagerView)
         
         let bundle = Bundle(for: type(of: self))
         let videoCellNib = UINib(nibName: "VideoPageCollectionViewCell", bundle: bundle)
-        collectionView.register(videoCellNib, forCellWithReuseIdentifier: "VideoPageCollectionViewCell")
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.isPagingEnabled = true
+//        collectionView.register(videoCellNib, forCellWithReuseIdentifier: "VideoPageCollectionViewCell")
+//        collectionView.delegate = self
+//        collectionView.dataSource = self
+//        collectionView.isPagingEnabled = true
         
-//        pagerView.register(videoCellNib, forCellWithReuseIdentifier: "VideoPageCollectionViewCell")
-//        pagerView.dataSource = self
-//        pagerView.delegate = self
-//        pagerView.scrollDirection = .vertical
-//        pagerView.interitemSpacing = 0
+        pagerView.register(videoCellNib, forCellWithReuseIdentifier: "VideoPageCollectionViewCell")
+        pagerView.dataSource = self
+        pagerView.delegate = self
+        pagerView.scrollDirection = .vertical
+        pagerView.interitemSpacing = 0
         
     }
     
@@ -72,6 +73,7 @@ class VideoPageViewController: UIViewController {
     }
 }
 
+/*
 extension VideoPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.videos.count
@@ -82,6 +84,7 @@ extension VideoPageViewController: UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPageCollectionViewCell", for: indexPath) as! VideoPageCollectionViewCell
         
         let vObj = self.videos[indexPath.row]
+        cell.cellIndex = indexPath.row
         Global.getProfileNameByID(vObj.ownerId) { (name) in
             cell.profileLbl.text = name
         }
@@ -109,6 +112,16 @@ extension VideoPageViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print("Will Displaying Index = \(indexPath.row)")
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPageCollectionViewCell", for: indexPath) as! VideoPageCollectionViewCell
+//        cell.playVideo()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("YTPlayerView: ")
+        for cell in self.collectionView.visibleCells {
+            let indexPath = self.collectionView.indexPath(for: cell)
+            print("YTPlayerView: Selected Cell Index : \(indexPath!.row)")
+        }
     }
 }
 
@@ -116,12 +129,11 @@ extension VideoPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
         self.view.layoutIfNeeded()
-        return CGSize(width: self.container.bounds.width, height: self.container.bounds.height/3)
+        return CGSize(width: self.container.bounds.width, height: self.container.bounds.height)
     }
 }
+*/
 
-
-/*
 extension VideoPageViewController: FSPagerViewDelegate, FSPagerViewDataSource {
     func numberOfItems(in pagerView: FSPagerView) -> Int {
         return self.videos.count
@@ -131,17 +143,12 @@ extension VideoPageViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         let cell = pagerView.dequeueReusableCell(withReuseIdentifier: "VideoPageCollectionViewCell", at: index) as! VideoPageCollectionViewCell
         
         let vObj = self.videos[index]
+        cell.cellIndex = index
         Global.getProfileNameByID(vObj.ownerId) { (name) in
             cell.profileLbl.text = name
         }
         Global.getProfileUrlByID(vObj.ownerId) { (url) in
             cell.profileImg.sd_setImage(with: URL(string: url), placeholderImage: PROFILE_DEFAULT_GREEN_AVATAR, options: [], context: nil)
-        }
-        
-        if index == self.currentIndex {
-            cell.canStart = true
-        } else {
-            cell.canStart = false
         }
         
         if let videoId = vObj.postUrl.youtubeID {
@@ -151,17 +158,19 @@ extension VideoPageViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         return cell
     }
     
-    func pagerViewWillEndDragging(_ pagerView: FSPagerView, targetIndex: Int) {
-        print("current Photo index = %d", targetIndex)
-        
-        if self.currentIndex != targetIndex {
-            let prevCell = pagerView.dequeueReusableCell(withReuseIdentifier: "VideoPageCollectionViewCell", at: self.currentIndex) as! VideoPageCollectionViewCell
-            prevCell.stopVideo()
-            
-            let targetCell = pagerView.dequeueReusableCell(withReuseIdentifier: "VideoPageCollectionViewCell", at: targetIndex) as! VideoPageCollectionViewCell
-            targetCell.startVideo()
-            
-            self.currentIndex = targetIndex
+    func pagerViewDidEndDecelerating(_ pagerView: FSPagerView) {
+        if Global.ytVideoIndex == pagerView.currentIndex {
+            return
         }
+        
+        let prevCell = pagerView.dequeueReusableCell(withReuseIdentifier: "VideoPageCollectionViewCell", at: Global.ytVideoIndex) as! VideoPageCollectionViewCell
+        prevCell.deselectedVideo()
+        
+        let currentCell = pagerView.dequeueReusableCell(withReuseIdentifier: "VideoPageCollectionViewCell", at: pagerView.currentIndex) as! VideoPageCollectionViewCell
+        currentCell.selectedVideo()
+        
+        print("YTPlayerView: Current = \(Global.ytVideoIndex), Selected Cell Index = \(pagerView.currentIndex)")
+        Global.ytVideoIndex = pagerView.currentIndex
     }
-} */
+    
+}

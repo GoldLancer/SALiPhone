@@ -8,14 +8,14 @@
 import UIKit
 
 protocol TuCoinCollectionViewCellDelegate {
-    func selectedTUCoins(_ coins: Int)
+    func selectedTUCoins(_ index: Int)
 }
 
 class TuCoinCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var coinLbl: UILabel!
     
-    var coins: Int = TUCOIN_ITEMS[0]
+    var cellIndex: Int = 0
     var delegate: TuCoinCollectionViewCellDelegate?
     
     override func awakeFromNib() {
@@ -24,6 +24,6 @@ class TuCoinCollectionViewCell: UICollectionViewCell {
     }
 
     @IBAction func onClickCell(_ sender: Any) {
-        self.delegate?.selectedTUCoins(self.coins)
+        self.delegate?.selectedTUCoins(self.cellIndex)
     }
 }

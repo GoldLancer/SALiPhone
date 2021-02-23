@@ -247,6 +247,17 @@ class UserObject: BaseUserObject {
                 }
             }
         }
+        self.transactions.removeAll()
+        if let dicValue = value[UserConstant.TRANSACTIONS] as? NSDictionary {
+            for value in dicValue.allValues {
+                if let data = value as? NSDictionary {
+                    let transObj = TransObject()
+                    transObj.initObjectFromJSON(data)
+                    
+                    self.transactions.append(transObj)
+                }
+            }
+        }
     }
     
     func copyBaseUserObject() -> BaseUserObject {

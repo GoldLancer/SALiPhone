@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import youtube_ios_player_helper_swift
+import YoutubePlayer_in_WKWebView
 import Firebase
 
 protocol NewPostViewControllerDelegate {

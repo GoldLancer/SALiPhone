@@ -7,13 +7,13 @@
 
 import UIKit
 import AVKit
-import youtube_ios_player_helper_swift
+import YoutubePlayer_in_WKWebView
 
 class PostVideoViewController: PostBaseViewController {
 
     @IBOutlet weak var videoView: UIView!
-    @IBOutlet weak var ytView: UIView!
-    @IBOutlet weak var ytPlayerView: YTPlayerView!
+    @IBOutlet weak var ytView: UIView!    
+    @IBOutlet weak var ytPlayerView: WKYTPlayerView!
     @IBOutlet weak var playImg: UIImageView!
     
     var moviePlayer:AVPlayerViewController!
@@ -64,7 +64,7 @@ class PostVideoViewController: PostBaseViewController {
             ]
             
             if let videoId = feedobj.postUrl.youtubeID {
-                _ = self.ytPlayerView.load(videoId: videoId, playerVars: playerVars)
+                _ = self.ytPlayerView.load(withVideoId: videoId, playerVars: playerVars)
                 self.ytPlayerView.isUserInteractionEnabled = true
             } else {
                 showAlertWithText(errorText: "Can't get Youtube Video ID from this feed.")
@@ -83,15 +83,22 @@ class PostVideoViewController: PostBaseViewController {
             }
             
         } else {
-            if self.ytPlayerView.playerState == .playing {
-                self.ytPlayerView.pauseVideo()
-                self.playImg.image = UIImage(systemName: "play.circle")
-            } else {
-                self.ytPlayerView.playVideo()
-                self.playImg.image = UIImage(systemName: "pause.circle")
+            self.ytPlayerView.getPlayerState { (status, error) in
+                if error != nil {
+                    return
+                }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.playImg.isHidden = true
+                if status == .playing {
+                    self.ytPlayerView.pauseVideo()
+                    self.playImg.image = UIImage(systemName: "play.circle")
+                }
+                if status == .paused {
+                    self.ytPlayerView.playVideo()
+                    self.playImg.image = UIImage(systemName: "pause.circle")
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.playImg.isHidden = true
+                    }
                 }
             }
         }
@@ -110,17 +117,17 @@ class PostVideoViewController: PostBaseViewController {
 
 }
 
-extension PostVideoViewController: YTPlayerViewDelegate {
-    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+extension PostVideoViewController: WKYTPlayerViewDelegate {
+    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
         self.ytPlayerView.playVideo()
         self.ytPlayerView.isHidden = false
     }
     
-    func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float){
+    func playerView(_ playerView: WKYTPlayerView, didPlayTime playTime: Float){
         
     }
     
-    func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor{
+    func playerViewPreferredWebViewBackgroundColor(_ playerView: WKYTPlayerView) -> UIColor{
         return MAIN_BG_DARK_COLOR ?? UIColor.black
     }
 }

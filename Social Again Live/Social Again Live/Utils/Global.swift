@@ -57,10 +57,15 @@ class Global: NSObject {
     static var monthlyPot                       = 0
     static var likeCount                        = 0
     
+    static var ytVideoIndex                     = 0
+    
     static let userRef     = Database.database().reference().child(USER_DB_NAME)
     static let postRef     = Database.database().reference().child(POST_DB_NAME)
     static let chatRef     = Database.database().reference().child(MSG_DB_NAME)
     static let videoRef    = Database.database().reference().child(VIDEO_DB_NAME)
+    
+    // IAP
+    static var hasPurchased: Bool = false
     
     // MARK: ALERTVIEW
     class func alertWithText(errorText: String?,
@@ -152,6 +157,16 @@ class Global: NSObject {
     class func getCurrentTimeintervalUint() -> UInt64 {
         let timestamp = NSDate().timeIntervalSince1970
         return UInt64(timestamp*1000)
+    }
+    
+    class func getPurchseDateTimeFromTimeMillis(_ time: UInt64) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(time/1000))
+        return date.getDateString()
+    }
+
+    class func getPurchseEndDateTimeFromTimeMillis(_ time: UInt64) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(time/1000))
+        return date.addMonth(n: 1).getDateString()
     }
     
     class func getMessageSendTime(_ time: UInt64) -> String {
@@ -273,6 +288,10 @@ class Global: NSObject {
     
     // MARK: GOTO TARGET VIEW
     class func goMainView() {
+        
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.EMAIL).setValue(Global.mCurrentUser!.email)
+        Global.userRef.child(Global.mCurrentUser!.id).child(UserConstant.IS_VERIFIED).setValue(true)
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainVC = storyboard.instantiateInitialViewController()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -330,6 +349,26 @@ class Global: NSObject {
         userRef.child(userId).child(UserConstant.COIN).observeSingleEvent(of: .value) { (snapshot) in
             let coin = snapshot.value as? Int ?? 0
             completion(coin)
+        }
+    }
+    
+    // Add Pot
+    class func upgradeMonthlyPot() {
+        let dbRef = Database.database().reference().child(MONTHLY_POT_DB_NAME)
+        dbRef.observeSingleEvent(of: .value) { (snapshot) in
+            let pot = snapshot.value as? Int ?? 0
+
+            Global.monthlyPot = pot + 100
+            dbRef.setValue(Global.monthlyPot)
+        }
+    }
+    
+    class func upgradeMyPosts() {
+        let canShared = Global.mCurrentUser!.isPulse && Global.mCurrentUser!.isUpgraded
+        
+        for postObj in Global.myPostObjs {
+            postObj.canShared = canShared
+            Global.postRef.child(postObj.postId).child(FeedConstant.CAN_SHARED).setValue(canShared)
         }
     }
     

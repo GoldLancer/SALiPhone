@@ -19,8 +19,11 @@ target 'Social Again Live' do
   pod 'MDatePickerView'
   pod 'ESPullToRefresh'
   pod 'BEMCheckBox'
-  pod 'youtube-ios-player-helper-swift'
+  pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
   pod 'PushNotifications'
+  pod 'FSPagerView'
+  pod 'SwiftyStoreKit'
+  pod 'SVProgressHUD'
   
   target 'WebRTCiOSSDK' do
     # For WebRTCiOSSDK

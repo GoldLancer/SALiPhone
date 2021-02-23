@@ -10,6 +10,7 @@ import PKHUD
 import Firebase
 import IQKeyboardManagerSwift
 import SwiftySound
+import SVProgressHUD
 
 class BaseViewController: UIViewController {
     
@@ -21,15 +22,19 @@ class BaseViewController: UIViewController {
     }    
 
     func showLoadingView(_ label: String? = "Loading...") {
+        
         DispatchQueue.main.async {
-            HUD.show(.labeledProgress(title: nil, subtitle: label))
-            HUD.dimsBackground = true
+//            HUD.show(.labeledProgress(title: nil, subtitle: label))
+//            HUD.dimsBackground = true
+            
+            SVProgressHUD.show(withStatus: label)
         }
     }
     
     func hideLoadingView() {
         DispatchQueue.main.async {
-            HUD.hide()
+//            HUD.hide()
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -218,6 +223,7 @@ class BaseViewController: UIViewController {
             
             upgradeView.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
             upgradeView.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+            upgradeView.delegate = self
             
             self.present(upgradeView, animated: true, completion: nil)
         }
@@ -254,6 +260,10 @@ class BaseViewController: UIViewController {
     
     func processSelectedPhoto(_ selectedImage: UIImage) {
         // More via override func
+    }
+    
+    func finishPurchasing(_ result: String) {
+        // More view Override func
     }
     
     func openCamera() {
@@ -300,6 +310,12 @@ extension BaseViewController: UIImagePickerControllerDelegate, UINavigationContr
         }
         
         self.processSelectedPhoto(selectedImage)
+    }
+}
+
+extension BaseViewController: UpgradeViewControllerDelegate {
+    func finishedPurchasing(_ result: String) {
+        self.finishPurchasing(result)
     }
 }
 
